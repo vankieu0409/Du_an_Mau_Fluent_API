@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace GUI_QLBH
 {
-    public partial class Form1 : Form
+    public partial class frmKhachHang : Form
     {
-        public Form1()
+        public frmKhachHang()
         {
             InitializeComponent();
         }
-
     }
 }
