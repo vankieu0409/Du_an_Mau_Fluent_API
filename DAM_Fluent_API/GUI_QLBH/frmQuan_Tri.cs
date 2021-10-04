@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GUI_QLBH
 {
-    public partial class frmKhachHang : Form
+    public partial class frmQuan_Tri : Form
     {
-        public frmKhachHang()
+        public frmQuan_Tri()
         {
             InitializeComponent();
         }
