@@ -15,6 +15,8 @@ namespace GUI_QLBH
 {
     public partial class frmQuan_Tri : Form
     {
+        private string Error = " Thông báo của UBND xã Tuân Chính";
+        private int flag = 0;
         #region TAB_PAPE_NHÂN VIÊN
         private IServiceNhanVien_BUS nv_BUS;
         private List<NhanVien> listNhanViens;
@@ -55,6 +57,18 @@ namespace GUI_QLBH
         private void btn_them_Click(object sender, EventArgs e)
         {
             NhanVien nv = new NhanVien();
+            nv.Email = txt_gmail.Text;
+            nv.TenNv = txt_nameNV.Text;
+            nv.DiaChi = txt_diaChiNV.Text;
+            nv.VaiTro = rbtn_QuanTri.Checked ? 0 : 1;
+            nv.TinhTrang = Cbx_HoatDong.Checked ? 1 : 0;
+            nv.MatKhau = txt_PassWord.Text;
+            if (MessageBox.Show("bạn muốn thêm tài Khoản nhân viên mới chứ??",Error,MessageBoxButtons.YesNo)==DialogResult.Yes)
+            {
+                MessageBox.Show(nv_BUS.AddNhanvien_BUS(nv), Error);
+            }
+            loatDAtaNHANVIEN();
+            flag = 2;
 
         }
         #endregion
