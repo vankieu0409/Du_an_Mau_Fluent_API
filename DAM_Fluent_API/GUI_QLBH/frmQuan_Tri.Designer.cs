@@ -92,7 +92,7 @@ namespace GUI_QLBH
             this.btn_ThemKhach = new System.Windows.Forms.Button();
             this.btn_SearchKhach = new System.Windows.Forms.Button();
             this.txt_TimKhach = new System.Windows.Forms.TextBox();
-            this.DGV_lisst = new System.Windows.Forms.DataGridView();
+            this.DGV_KhachHang = new System.Windows.Forms.DataGridView();
             this.rbtn_Nu_Khach = new System.Windows.Forms.RadioButton();
             this.rbtn_nam_Khach = new System.Windows.Forms.RadioButton();
             this.txt_AddressKhach = new System.Windows.Forms.TextBox();
@@ -109,12 +109,12 @@ namespace GUI_QLBH
             ((System.ComponentModel.ISupportInitialize)(this.pt_hang)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_hang)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_lisst)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_KhachHang)).BeginInit();
             this.SuspendLayout();
             // 
             // tab_quantri
             // 
-            this.tab_quantri.CausesValidation = false;
+            this.tab_quantri.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tab_quantri.Controls.Add(this.tb_NhanVien);
             this.tab_quantri.Controls.Add(this.tabPage2);
             this.tab_quantri.Controls.Add(this.tabPage3);
@@ -122,8 +122,8 @@ namespace GUI_QLBH
             this.tab_quantri.Name = "tab_quantri";
             this.tab_quantri.SelectedIndex = 0;
             this.tab_quantri.Size = new System.Drawing.Size(1008, 676);
+            this.tab_quantri.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab_quantri.TabIndex = 44;
-            this.tab_quantri.Visible = false;
             // 
             // tb_NhanVien
             // 
@@ -151,10 +151,10 @@ namespace GUI_QLBH
             this.tb_NhanVien.Controls.Add(this.label8);
             this.tb_NhanVien.Controls.Add(this.label9);
             this.tb_NhanVien.Controls.Add(this.label10);
-            this.tb_NhanVien.Location = new System.Drawing.Point(4, 29);
+            this.tb_NhanVien.Location = new System.Drawing.Point(4, 32);
             this.tb_NhanVien.Name = "tb_NhanVien";
             this.tb_NhanVien.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_NhanVien.Size = new System.Drawing.Size(1000, 643);
+            this.tb_NhanVien.Size = new System.Drawing.Size(1000, 640);
             this.tb_NhanVien.TabIndex = 0;
             this.tb_NhanVien.Text = "Nhân Viên";
             this.tb_NhanVien.UseVisualStyleBackColor = true;
@@ -267,6 +267,7 @@ namespace GUI_QLBH
             this.btn_them.TabIndex = 40;
             this.btn_them.Text = "Create";
             this.btn_them.UseVisualStyleBackColor = true;
+            this.btn_them.Click += new System.EventHandler(this.btn_them_Click);
             // 
             // btn_Search
             // 
@@ -425,10 +426,10 @@ namespace GUI_QLBH
             this.tabPage2.Controls.Add(this.btn_SearchHang);
             this.tabPage2.Controls.Add(this.txt_timhang);
             this.tabPage2.Controls.Add(this.DGV_hang);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Location = new System.Drawing.Point(4, 32);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1000, 643);
+            this.tabPage2.Size = new System.Drawing.Size(1000, 640);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Mặt Hàng";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -698,7 +699,7 @@ namespace GUI_QLBH
             this.tabPage3.Controls.Add(this.btn_ThemKhach);
             this.tabPage3.Controls.Add(this.btn_SearchKhach);
             this.tabPage3.Controls.Add(this.txt_TimKhach);
-            this.tabPage3.Controls.Add(this.DGV_lisst);
+            this.tabPage3.Controls.Add(this.DGV_KhachHang);
             this.tabPage3.Controls.Add(this.rbtn_Nu_Khach);
             this.tabPage3.Controls.Add(this.rbtn_nam_Khach);
             this.tabPage3.Controls.Add(this.txt_AddressKhach);
@@ -708,9 +709,9 @@ namespace GUI_QLBH
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.label1);
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Location = new System.Drawing.Point(4, 32);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1000, 643);
+            this.tabPage3.Size = new System.Drawing.Size(1000, 640);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Khách hàng";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -805,16 +806,16 @@ namespace GUI_QLBH
             this.txt_TimKhach.Size = new System.Drawing.Size(218, 38);
             this.txt_TimKhach.TabIndex = 73;
             // 
-            // DGV_lisst
+            // DGV_KhachHang
             // 
-            this.DGV_lisst.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.DGV_lisst.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_lisst.Location = new System.Drawing.Point(38, 132);
-            this.DGV_lisst.Name = "DGV_lisst";
-            this.DGV_lisst.RowHeadersWidth = 51;
-            this.DGV_lisst.RowTemplate.Height = 29;
-            this.DGV_lisst.Size = new System.Drawing.Size(924, 254);
-            this.DGV_lisst.TabIndex = 72;
+            this.DGV_KhachHang.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_KhachHang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_KhachHang.Location = new System.Drawing.Point(38, 132);
+            this.DGV_KhachHang.Name = "DGV_KhachHang";
+            this.DGV_KhachHang.RowHeadersWidth = 51;
+            this.DGV_KhachHang.RowTemplate.Height = 29;
+            this.DGV_KhachHang.Size = new System.Drawing.Size(924, 254);
+            this.DGV_KhachHang.TabIndex = 72;
             // 
             // rbtn_Nu_Khach
             // 
@@ -906,13 +907,13 @@ namespace GUI_QLBH
             this.label1.TabIndex = 63;
             this.label1.Text = "Điện Thoại";
             // 
-            // frmQuanTri
+            // frmQuan_Tri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 687);
             this.Controls.Add(this.tab_quantri);
-            this.Name = "frmQuanTri";
+            this.Name = "frmQuan_Tri";
             this.Text = "Quản Lý";
             this.tab_quantri.ResumeLayout(false);
             this.tb_NhanVien.ResumeLayout(false);
@@ -924,7 +925,7 @@ namespace GUI_QLBH
             ((System.ComponentModel.ISupportInitialize)(this.DGV_hang)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV_lisst)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_KhachHang)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -943,7 +944,7 @@ namespace GUI_QLBH
         private System.Windows.Forms.Button btn_ThemKhach;
         private System.Windows.Forms.Button btn_SearchKhach;
         private System.Windows.Forms.TextBox txt_TimKhach;
-        private System.Windows.Forms.DataGridView DGV_lisst;
+        private System.Windows.Forms.DataGridView DGV_KhachHang;
         private System.Windows.Forms.RadioButton rbtn_Nu_Khach;
         private System.Windows.Forms.RadioButton rbtn_nam_Khach;
         private System.Windows.Forms.TextBox txt_AddressKhach;

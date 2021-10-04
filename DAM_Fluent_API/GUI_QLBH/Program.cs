@@ -17,7 +17,7 @@ namespace GUI_QLBH
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new frmQuan_Tri());
         }
     }
 }

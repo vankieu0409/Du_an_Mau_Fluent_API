@@ -28,8 +28,9 @@ namespace DAL_QLBH.Migrations
                 name: "Hangs",
                 columns: table => new
                 {
-                    MaHang = table.Column<int>(type: "int", nullable: false),
-                    TenHang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    MaHang = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TenHang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
                     DonGiaBan = table.Column<double>(type: "float", nullable: false),
                     DonGiaNhap = table.Column<double>(type: "float", nullable: false),
@@ -39,7 +40,7 @@ namespace DAL_QLBH.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hangs", x => new { x.MaHang, x.TenHang });
+                    table.PrimaryKey("PK_Hangs", x => x.MaHang);
                     table.ForeignKey(
                         name: "FK_Hangs_NHANVIEN1_MaNV",
                         column: x => x.MaNV,

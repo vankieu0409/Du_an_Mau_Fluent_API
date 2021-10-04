@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Folder Include="Entites\" />
+    <Folder Include="InterfaceService\" />
+    <Folder Include="Sevice\" />
   </ItemGroup>
 
   <ItemGroup>

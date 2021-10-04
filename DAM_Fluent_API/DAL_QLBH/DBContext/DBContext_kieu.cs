@@ -31,7 +31,7 @@ namespace DAL_QLBH.DBContext
             modelBuilder.Entity<Hang>(entity =>
             {
 
-                entity.HasKey(p => new { p.MaHang, p.TenHang }); // thiết lập 2  khóa chính
+                entity.HasKey(p => new { p.MaHang}); // thiết lập 2  khóa chính
                 entity.HasOne(e=>e.MaNv)//thiết lập khóa ngoại
                     .WithMany()
                     .HasForeignKey("MaNV");// đặt tên cột khóa ngoại

@@ -4,4 +4,13 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="BUS_SeVice\" />
+    <Folder Include="BUS_Interface\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DAL_QLBH\DAL_QLBH.csproj" />
+  </ItemGroup>
+
 </Project>

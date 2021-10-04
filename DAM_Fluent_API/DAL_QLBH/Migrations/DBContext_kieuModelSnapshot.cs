@@ -14,18 +14,16 @@ namespace DAL_QLBH.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DAL_QLBH.Entites.Hang", b =>
                 {
                     b.Property<int>("MaHang")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TenHang")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("DonGiaBan")
                         .HasColumnType("float");
@@ -49,7 +47,11 @@ namespace DAL_QLBH.Migrations
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
-                    b.HasKey("MaHang", "TenHang");
+                    b.Property<string>("TenHang")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("MaHang");
 
                     b.HasIndex("MaNV");
 
