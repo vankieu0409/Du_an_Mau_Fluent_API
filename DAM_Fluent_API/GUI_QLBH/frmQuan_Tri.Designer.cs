@@ -445,7 +445,7 @@ namespace GUI_QLBH
             // button9
             // 
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(636, -37);
+            this.button9.Location = new System.Drawing.Point(634, 6);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(79, 38);
             this.button9.TabIndex = 72;
@@ -911,7 +911,7 @@ namespace GUI_QLBH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1020, 687);
+            this.ClientSize = new System.Drawing.Size(1020, 702);
             this.Controls.Add(this.tab_quantri);
             this.Name = "frmQuan_Tri";
             this.Text = "Quản Lý";

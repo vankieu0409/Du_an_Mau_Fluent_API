@@ -32,7 +32,7 @@ namespace DAL_QLBH.Sevice
         {
             nv.Id = lsstNhanViens.Max(c => c.Id) + 1;
             nv.MaNv = "NV" + nv.Id;
-            lsstNhanViens.Add(nv);
+            lsstNhanViens.Add(nv);// Add thêm vào list
             DB.NhanViens.Add(nv);
             return " thêm thành Công";
         }
