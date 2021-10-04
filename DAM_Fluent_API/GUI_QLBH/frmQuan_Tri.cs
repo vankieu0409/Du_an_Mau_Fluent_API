@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using BUS_QLBH.BUS_Interface;
 using BUS_QLBH.BUS_SeVice;
+
 using DAL_QLBH.Entites;
 
 namespace GUI_QLBH
@@ -32,6 +34,7 @@ namespace GUI_QLBH
 
             #endregion
 
+
         }
 
         #region TAB_PAPE_NHÂN VIÊN
@@ -50,10 +53,11 @@ namespace GUI_QLBH
             DGV_Nhanvien.Rows.Clear();
             foreach (var x in nv_BUS.getListNhanVien_BUS())
             {
-                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 1 ? "Nhân Viên" : x.VaiTro == 0 ? "Quản trị" : "", x.TinhTrang == 0 ? "Ngừng Hoạt Động" : x.TinhTrang == 1 ? "Hoạt Động" : "", x.MatKhau,x.MaNv);
+                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 1 ? "Nhân Viên" : x.VaiTro == 0 ? "Quản trị" : "", x.TinhTrang == 0 ? "Ngừng Hoạt Động" : x.TinhTrang == 1 ? "Hoạt Động" : "", x.MatKhau, x.MaNv);
             }
 
         }
+
         private void btn_them_Click(object sender, EventArgs e)
         {
             NhanVien nv = new NhanVien();
@@ -63,17 +67,27 @@ namespace GUI_QLBH
             nv.VaiTro = rbtn_QuanTri.Checked ? 0 : 1;
             nv.TinhTrang = Cbx_HoatDong.Checked ? 1 : 0;
             nv.MatKhau = txt_PassWord.Text;
-            if (MessageBox.Show("bạn muốn thêm tài Khoản nhân viên mới chứ??",Error,MessageBoxButtons.YesNo)==DialogResult.Yes)
+            if (MessageBox.Show("bạn muốn thêm tài Khoản nhân viên mới chứ??", Error, MessageBoxButtons.YesNo) ==
+                DialogResult.Yes)
             {
                 MessageBox.Show(nv_BUS.AddNhanvien_BUS(nv), Error);
             }
+
             loatDAtaNHANVIEN();
             flag = 2;
-
         }
+
+        private void btn_Save_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(nv_BUS.SaveData_BUS(), Error);
+        }
+        
+
         #endregion
+
+
     }
 
-       
-     
+
+
 }

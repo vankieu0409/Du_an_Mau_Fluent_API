@@ -57,7 +57,6 @@ namespace GUI_QLBH
             this.label10 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pt_hang = new System.Windows.Forms.PictureBox();
-            this.button9 = new System.Windows.Forms.Button();
             this.txt_note = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txt_linkAnh = new System.Windows.Forms.TextBox();
@@ -237,6 +236,7 @@ namespace GUI_QLBH
             this.btn_Save.TabIndex = 43;
             this.btn_Save.Text = "Save";
             this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
             // 
             // btn_Edit
             // 
@@ -401,7 +401,6 @@ namespace GUI_QLBH
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.pt_hang);
-            this.tabPage2.Controls.Add(this.button9);
             this.tabPage2.Controls.Add(this.txt_note);
             this.tabPage2.Controls.Add(this.label11);
             this.tabPage2.Controls.Add(this.txt_linkAnh);
@@ -436,21 +435,11 @@ namespace GUI_QLBH
             // 
             // pt_hang
             // 
-            this.pt_hang.Location = new System.Drawing.Point(726, 45);
+            this.pt_hang.Location = new System.Drawing.Point(706, 47);
             this.pt_hang.Name = "pt_hang";
-            this.pt_hang.Size = new System.Drawing.Size(213, 168);
+            this.pt_hang.Size = new System.Drawing.Size(239, 168);
             this.pt_hang.TabIndex = 73;
             this.pt_hang.TabStop = false;
-            // 
-            // button9
-            // 
-            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(634, 6);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(79, 38);
-            this.button9.TabIndex = 72;
-            this.button9.Text = "Mở Hình";
-            this.button9.UseVisualStyleBackColor = true;
             // 
             // txt_note
             // 
