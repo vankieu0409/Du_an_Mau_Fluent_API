@@ -19,6 +19,7 @@ namespace GUI_QLBH
     {
         private string Error = " Thông báo của UBND xã Tuân Chính";
         private int flag = 0;
+        private string IdWhenClick;
         #region TAB_PAPE_NHÂN VIÊN
         private IServiceNhanVien_BUS nv_BUS;
         private List<NhanVien> listNhanViens;
@@ -67,7 +68,7 @@ namespace GUI_QLBH
             nv.VaiTro = rbtn_QuanTri.Checked ? 0 : 1;
             nv.TinhTrang = Cbx_HoatDong.Checked ? 1 : 0;
             nv.MatKhau = txt_PassWord.Text;
-            if (MessageBox.Show("bạn muốn thêm tài Khoản nhân viên mới chứ??", Error, MessageBoxButtons.YesNo) ==
+            if (MessageBox.Show($"bạn muốn thêm tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
                 MessageBox.Show(nv_BUS.AddNhanvien_BUS(nv), Error);
@@ -81,11 +82,53 @@ namespace GUI_QLBH
         {
             MessageBox.Show(nv_BUS.SaveData_BUS(), Error);
         }
-        
 
+        private void DGV_Nhanvien_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowindex = e.RowIndex;
+            if (rowindex == nv_BUS.getListNhanVien_BUS().Count /*|| rowindex == 0*/) return;
+            txt_gmail.Text = DGV_Nhanvien.Rows[rowindex].Cells[0].Value.ToString();
+            txt_nameNV.Text = DGV_Nhanvien.Rows[rowindex].Cells[1].Value.ToString();
+            txt_diaChiNV.Text = DGV_Nhanvien.Rows[rowindex].Cells[2].Value.ToString();
+            rbtn_NhanVien.Checked = DGV_Nhanvien.Rows[rowindex].Cells[3].Value.ToString() == "Nhân Viên" ? true : false;
+            rbtn_QuanTri.Checked = DGV_Nhanvien.Rows[rowindex].Cells[3].Value.ToString() == "Quản trị" ? true : false;
+            Cbx_HoatDong.Checked = DGV_Nhanvien.Rows[rowindex].Cells[4].Value.ToString() == "Hoạt Động" ? true : false;
+            cbx_KhongHD.Checked = DGV_Nhanvien.Rows[rowindex].Cells[4].Value.ToString() == "Ngừng Hoạt Động" ? true : false;
+            txt_PassWord.Text = DGV_Nhanvien.Rows[rowindex].Cells[5].Value.ToString();
+            IdWhenClick = DGV_Nhanvien.Rows[rowindex].Cells[6].Value.ToString();
+        }
+
+        private void btn_Edit_Click(object sender, EventArgs e)
+        {
+            NhanVien nv = new NhanVien();
+            nv = nv_BUS.getListNhanVien_BUS().Find(c => c.MaNv == IdWhenClick);
+            nv.Email = txt_gmail.Text;
+            nv.TenNv = txt_nameNV.Text;
+            nv.DiaChi = txt_diaChiNV.Text;
+            nv.VaiTro = rbtn_QuanTri.Checked ? 0 : 1;
+            nv.TinhTrang = Cbx_HoatDong.Checked ? 1 : 0;
+            nv.MatKhau = txt_PassWord.Text;
+            if (MessageBox.Show($"bạn muốn Sửa tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
+                DialogResult.Yes)
+            {
+                MessageBox.Show(nv_BUS.EditNhanVien_BUS(nv), Error);
+            }
+            loatDAtaNHANVIEN();
+            flag = 3;
+        }
+
+        private void btn_delete_Click(object sender, EventArgs e)
+        {
+            var nv= nv_BUS.getListNhanVien_BUS().Find(c => c.MaNv == IdWhenClick);
+            if (MessageBox.Show($"bạn muốn xóa tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
+                DialogResult.Yes)
+            {
+                MessageBox.Show(nv_BUS.DeleteNhanVien_BUS(nv), Error);
+            }
+            loatDAtaNHANVIEN();
+            flag = 3;
+        }
         #endregion
-
-
     }
 
 

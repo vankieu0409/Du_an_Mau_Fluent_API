@@ -247,6 +247,7 @@ namespace GUI_QLBH
             this.btn_Edit.TabIndex = 42;
             this.btn_Edit.Text = "Edit";
             this.btn_Edit.UseVisualStyleBackColor = true;
+            this.btn_Edit.Click += new System.EventHandler(this.btn_Edit_Click);
             // 
             // btn_delete
             // 
@@ -257,6 +258,7 @@ namespace GUI_QLBH
             this.btn_delete.TabIndex = 41;
             this.btn_delete.Text = "Delete";
             this.btn_delete.UseVisualStyleBackColor = true;
+            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
             // 
             // btn_them
             // 
@@ -299,6 +301,7 @@ namespace GUI_QLBH
             this.DGV_Nhanvien.RowTemplate.Height = 29;
             this.DGV_Nhanvien.Size = new System.Drawing.Size(924, 254);
             this.DGV_Nhanvien.TabIndex = 37;
+            this.DGV_Nhanvien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Nhanvien_CellClick);
             // 
             // rbtn_QuanTri
             // 

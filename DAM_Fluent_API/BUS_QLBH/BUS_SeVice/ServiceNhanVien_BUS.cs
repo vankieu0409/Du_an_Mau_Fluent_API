@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BUS_QLBH.BUS_Interface;
 using DAL_QLBH.Entites;
 using DAL_QLBH.InterfaceService;
@@ -16,26 +17,32 @@ namespace BUS_QLBH.BUS_SeVice
         {
             dalNhanVien = new SeviceNhanVien();
             lstNhanVienBUS = new List<NhanVien>();
-            getListNhanVien_BUS();
+            lstNhanVienBUS= dalNhanVien.getListNhanVien();
         }
 
         public List<NhanVien> getListNhanVien_BUS()
         {
-            return lstNhanVienBUS = dalNhanVien.getListNhanVien();
+
+            return lstNhanVienBUS; 
         }
 
         public string AddNhanvien_BUS(NhanVien nv)
         {
+            nv.Id = lstNhanVienBUS.Max(c => c.Id) + 1;
+            nv.MaNv = "NV" + nv.Id;
+            lstNhanVienBUS.Add(nv);// Add thêm vào list
             return dalNhanVien.AddNhanvien(nv);
         }
 
         public string EditNhanVien_BUS(NhanVien nv)
         {
+            lstNhanVienBUS[lstNhanVienBUS.FindIndex(c => c.MaNv == nv.MaNv)] = nv;
             return dalNhanVien.EditNhanVien(nv);
         }
 
         public string DeleteNhanVien_BUS(NhanVien nv)
         {
+            lstNhanVienBUS.RemoveAt(lstNhanVienBUS.FindIndex(c => c.MaNv == nv.MaNv));
             return dalNhanVien.DeleteNhanVien(nv);
         }
 

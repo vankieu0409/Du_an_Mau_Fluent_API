@@ -30,16 +30,13 @@ namespace DAL_QLBH.Sevice
 
         public string AddNhanvien(NhanVien nv)
         {
-            nv.Id = lsstNhanViens.Max(c => c.Id) + 1;
-            nv.MaNv = "NV" + nv.Id;
-            lsstNhanViens.Add(nv);// Add thêm vào list
             DB.NhanViens.Add(nv);
             return " thêm thành Công";
         }
 
         public string EditNhanVien(NhanVien nv)
         {
-            lsstNhanViens[lsstNhanViens.FindIndex(c => c.MaNv == nv.MaNv)] = nv;
+           
             if (DB.NhanViens.ToList().Any(c => c.MaNv == nv.MaNv))
             {
                 DB.NhanViens.Update(nv);
@@ -53,7 +50,7 @@ namespace DAL_QLBH.Sevice
 
         public string DeleteNhanVien(NhanVien nv)
         {
-            lsstNhanViens.RemoveAt(lsstNhanViens.FindIndex(c => c.MaNv == nv.MaNv));
+            
             if (DB.NhanViens.ToList().Any(c => c.MaNv == nv.MaNv))
             {
                 DB.NhanViens.Remove(nv);
