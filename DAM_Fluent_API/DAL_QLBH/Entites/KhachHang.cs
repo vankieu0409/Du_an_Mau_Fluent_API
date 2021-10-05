@@ -18,7 +18,7 @@ namespace DAL_QLBH.Entites
         public string DiaChi { get; set; }
         [Required]
         [StringLength(5)]
-        public string GioiTinh { get; set; }
+        public int GioiTinh { get; set; }
         [Required]
         [StringLength(20)]
         public virtual NhanVien MaNv { get; set; }
