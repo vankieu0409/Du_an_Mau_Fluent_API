@@ -54,7 +54,7 @@ namespace GUI_QLBH
             DGV_Nhanvien.Rows.Clear();
             foreach (var x in nv_BUS.getListNhanVien_BUS())
             {
-                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 1 ? "Nhân Viên" : x.VaiTro == 0 ? "Quản trị" : "", x.TinhTrang == 0 ? "Ngừng Hoạt Động" : x.TinhTrang == 1 ? "Hoạt Động" : "", x.MatKhau, x.MaNv);
+                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 1 ? "Nhân Viên" : x.VaiTro == 0 ? "Quản trị" : "", x.TinhTrang == false ? "Ngừng Hoạt Động" : x.TinhTrang == true ? "Hoạt Động" : "", x.MatKhau, x.MaNv);
             }
 
         }
@@ -66,7 +66,7 @@ namespace GUI_QLBH
             nv.TenNv = txt_nameNV.Text;
             nv.DiaChi = txt_diaChiNV.Text;
             nv.VaiTro = rbtn_QuanTri.Checked ? 0 : 1;
-            nv.TinhTrang = Cbx_HoatDong.Checked ? 1 : 0;
+            nv.TinhTrang = Cbx_HoatDong.Checked ? true : false;
             nv.MatKhau = txt_PassWord.Text;
             if (MessageBox.Show($"bạn muốn thêm tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
@@ -106,7 +106,7 @@ namespace GUI_QLBH
             nv.TenNv = txt_nameNV.Text;
             nv.DiaChi = txt_diaChiNV.Text;
             nv.VaiTro = rbtn_QuanTri.Checked ? 0 : 1;
-            nv.TinhTrang = Cbx_HoatDong.Checked ? 1 : 0;
+            nv.TinhTrang = Cbx_HoatDong.Checked ? true : false;
             nv.MatKhau = txt_PassWord.Text;
             if (MessageBox.Show($"bạn muốn Sửa tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
