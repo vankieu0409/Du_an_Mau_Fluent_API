@@ -37,7 +37,7 @@ namespace DAL_QLBH.Sevice
         public string EditNhanVien(NhanVien nv)
         {
            
-            if (DB.NhanViens.ToList().Any(c => c.MaNv == nv.MaNv))
+            if (DB.NhanViens.ToList().Any(c => c.DienThoai == nv.DienThoai))
             {
                 DB.NhanViens.Update(nv);
                 return " Sửa thành Công";
@@ -51,7 +51,7 @@ namespace DAL_QLBH.Sevice
         public string DeleteNhanVien(NhanVien nv)
         {
             
-            if (DB.NhanViens.ToList().Any(c => c.MaNv == nv.MaNv))
+            if (DB.NhanViens.ToList().Any(c => c.DienThoai == nv.DienThoai))
             {
                 DB.NhanViens.Remove(nv);
                 return " Xóa thành Công";

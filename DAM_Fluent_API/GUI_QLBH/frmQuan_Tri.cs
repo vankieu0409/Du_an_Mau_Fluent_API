@@ -54,7 +54,7 @@ namespace GUI_QLBH
             DGV_Nhanvien.Rows.Clear();
             foreach (var x in nv_BUS.getListNhanVien_BUS())
             {
-                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 1 ? "Nhân Viên" : x.VaiTro == 0 ? "Quản trị" : "", x.TinhTrang == false ? "Ngừng Hoạt Động" : x.TinhTrang == true ? "Hoạt Động" : "", x.MatKhau, x.MaNv);
+                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 1 ? "Nhân Viên" : x.VaiTro == 0 ? "Quản trị" : "", x.TinhTrang == false ? "Ngừng Hoạt Động" : x.TinhTrang == true ? "Hoạt Động" : "", x.MatKhau, x.DienThoai);
             }
 
         }
@@ -101,7 +101,7 @@ namespace GUI_QLBH
         private void btn_Edit_Click(object sender, EventArgs e)
         {
             NhanVien nv = new NhanVien();
-            nv = nv_BUS.getListNhanVien_BUS().Find(c => c.MaNv == IdWhenClick);
+            nv = nv_BUS.getListNhanVien_BUS().Find(c => c.DienThoai == IdWhenClick);
             nv.Email = txt_gmail.Text;
             nv.TenNv = txt_nameNV.Text;
             nv.DiaChi = txt_diaChiNV.Text;
@@ -119,7 +119,7 @@ namespace GUI_QLBH
 
         private void btn_delete_Click(object sender, EventArgs e)
         {
-            var nv= nv_BUS.getListNhanVien_BUS().Find(c => c.MaNv == IdWhenClick);
+            var nv= nv_BUS.getListNhanVien_BUS().Find(c => c.DienThoai == IdWhenClick);
             if (MessageBox.Show($"bạn muốn xóa tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
