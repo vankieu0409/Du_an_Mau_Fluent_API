@@ -21,8 +21,8 @@ namespace DAL_QLBH.Entites
         public int GioiTinh { get; set; }
         [Required]
         public bool trangthai  { get; set; }
-        [Required]
-        [StringLength(20)]
-        public virtual NhanVien MaNv { get; set; }
+    
+        public string MaNV { get; set; } 
+       [ForeignKey("MaNV")] public NhanVien KhachHangs { get; set; }
     }
 }

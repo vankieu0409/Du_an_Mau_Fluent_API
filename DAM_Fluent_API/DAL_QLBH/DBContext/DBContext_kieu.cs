@@ -24,30 +24,30 @@ namespace DAL_QLBH.DBContext
         public DbSet<NhanVien> NhanViens { get; set; }
         public DbSet<Hang> Hangs { get; set; }
         public DbSet<KhachHang> KhachHangs { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Gọi các API từ đối tượng entity để xây dựng bảng Product
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Hang>(entity =>
-            {
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    // Gọi các API từ đối tượng entity để xây dựng bảng Product
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<Hang>(entity =>
+        //    {
 
-                entity.HasKey(p => new { p.MaHang}); // thiết lập 2  khóa chính
-                entity.HasOne(e=>e.MaNv)//thiết lập khóa ngoại
-                    .WithMany()
-                    .HasForeignKey("MaNV");// đặt tên cột khóa ngoại
-            });
-            modelBuilder.Entity<KhachHang>(entity =>
-            {
-                entity.HasKey(p => p.DienThoai);
-                entity.HasOne(p => p.MaNv)
-                    .WithMany()
-                    .HasForeignKey("MaNV");
-            });
-            modelBuilder.Entity<NhanVien>(entity =>
-            {
-                entity.ToTable("NHANVIEN1");
-            });
+        //        entity.HasKey(p => new { p.MaHang }); // thiết lập 2  khóa chính
+        //        //entity.HasOne(e => e.MaNV)//thiết lập khóa ngoại
+        //        //    .WithMany()
+        //        //    .HasForeignKey("MaNV");// đặt tên cột khóa ngoại
+        //    });
+        //    modelBuilder.Entity<KhachHang>(entity =>
+        //    {
+        //        entity.HasKey(p => p.DienThoai);
+        //        entity.HasOne<NhanVien>(p => p.MaNV)
+        //            .WithMany(p=>p.MaNV)
+        //            .HasForeignKey(c=>c.MaNV);
+        //    });
+        //    modelBuilder.Entity<NhanVien>(entity =>
+        //    {
+        //        entity.ToTable("NHANVIEN1");
+        //    });
 
-        }
+        //}
     }
 }

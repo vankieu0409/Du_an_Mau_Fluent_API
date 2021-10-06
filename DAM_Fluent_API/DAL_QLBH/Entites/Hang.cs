@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL_QLBH.Entites
-{
+{[Table("HANG")]
     public class Hang
     {
-       
+       [Key]
+       [Required]
         public int MaHang { get; set; }
         [StringLength(50)]
         public string TenHang { get; set; }
@@ -20,8 +21,9 @@ namespace DAL_QLBH.Entites
         public string GhiChu { get; set; }
         [Required]
         public bool trangthai { get; set; }
-        [Required]
-        [StringLength(20)]
-        public virtual NhanVien MaNv { get; set; }
+       
+        public string MaNV { get; set; }
+        [ForeignKey("MaNV")] public NhanVien KhachHangs { get; set; }
+       
     }
 }

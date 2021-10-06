@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_QLBH.Migrations
 {
     [DbContext(typeof(DBContext_kieu))]
-    [Migration("20211006060331_kieu4")]
-    partial class kieu4
+    [Migration("20211006103828_kieu")]
+    partial class kieu
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,6 @@ namespace DAL_QLBH.Migrations
                         .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("MaNV")
-                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("SoLuong")
@@ -61,7 +60,7 @@ namespace DAL_QLBH.Migrations
 
                     b.HasIndex("MaNV");
 
-                    b.ToTable("Hangs");
+                    b.ToTable("HANG");
                 });
 
             modelBuilder.Entity("DAL_QLBH.Entites.KhachHang", b =>
@@ -80,7 +79,6 @@ namespace DAL_QLBH.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MaNV")
-                        .IsRequired()
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TenKhach")
@@ -135,29 +133,32 @@ namespace DAL_QLBH.Migrations
 
                     b.HasKey("MaNV");
 
-                    b.ToTable("NHANVIEN1");
+                    b.ToTable("NhanVien");
                 });
 
             modelBuilder.Entity("DAL_QLBH.Entites.Hang", b =>
                 {
-                    b.HasOne("DAL_QLBH.Entites.NhanVien", "MaNv")
-                        .WithMany()
-                        .HasForeignKey("MaNV")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("DAL_QLBH.Entites.NhanVien", "KhachHangs")
+                        .WithMany("Hangs")
+                        .HasForeignKey("MaNV");
 
-                    b.Navigation("MaNv");
+                    b.Navigation("KhachHangs");
                 });
 
             modelBuilder.Entity("DAL_QLBH.Entites.KhachHang", b =>
                 {
-                    b.HasOne("DAL_QLBH.Entites.NhanVien", "MaNv")
-                        .WithMany()
-                        .HasForeignKey("MaNV")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("DAL_QLBH.Entites.NhanVien", "KhachHangs")
+                        .WithMany("KhachHangs")
+                        .HasForeignKey("MaNV");
 
-                    b.Navigation("MaNv");
+                    b.Navigation("KhachHangs");
+                });
+
+            modelBuilder.Entity("DAL_QLBH.Entites.NhanVien", b =>
+                {
+                    b.Navigation("Hangs");
+
+                    b.Navigation("KhachHangs");
                 });
 #pragma warning restore 612, 618
         }

@@ -27,5 +27,15 @@ namespace DAL_QLBH.Entites
         [Required]
         [StringLength(50)]
         public string MatKhau { get; set; }
+
+
+        public ICollection<Hang> Hangs { get; set; }
+        public ICollection<KhachHang> KhachHangs { get; set; }
+        public NhanVien()
+        {
+            Hangs = new HashSet<Hang>();
+            KhachHangs = new HashSet<KhachHang>();
+        }
+
     }
 }

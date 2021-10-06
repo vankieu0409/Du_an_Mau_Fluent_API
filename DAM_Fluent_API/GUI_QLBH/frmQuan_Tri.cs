@@ -19,11 +19,14 @@ namespace GUI_QLBH
     {
         private string Error = " Thông báo của UBND xã Tuân Chính";
         private int flag = 0;
-        private string IdWhenClick;
+        private string IdWhenClickNV;
         #region TAB_PAPE_NHÂN VIÊN
         private IServiceNhanVien_BUS nv_BUS;
         private List<NhanVien> listNhanViens;
         #endregion
+
+        private IServiceKhachHang_BUS KH_Bus;
+
         public frmQuan_Tri()
         {
             InitializeComponent();
@@ -95,13 +98,13 @@ namespace GUI_QLBH
             Cbx_HoatDong.Checked = DGV_Nhanvien.Rows[rowindex].Cells[4].Value.ToString() == "Hoạt Động" ? true : false;
             cbx_KhongHD.Checked = DGV_Nhanvien.Rows[rowindex].Cells[4].Value.ToString() == "Ngừng Hoạt Động" ? true : false;
             txt_PassWord.Text = DGV_Nhanvien.Rows[rowindex].Cells[5].Value.ToString();
-            IdWhenClick = DGV_Nhanvien.Rows[rowindex].Cells[6].Value.ToString();
+            IdWhenClickNV = DGV_Nhanvien.Rows[rowindex].Cells[6].Value.ToString();
         }
 
         private void btn_Edit_Click(object sender, EventArgs e)
         {
             NhanVien nv = new NhanVien();
-            nv = nv_BUS.getListNhanVien_BUS().Find(c => c.MaNV == IdWhenClick);
+            nv = nv_BUS.getListNhanVien_BUS().Find(c => c.MaNV == IdWhenClickNV);
             nv.Email = txt_gmail.Text;
             nv.TenNv = txt_nameNV.Text;
             nv.DiaChi = txt_diaChiNV.Text;
@@ -119,7 +122,7 @@ namespace GUI_QLBH
 
         private void btn_delete_Click(object sender, EventArgs e)
         {
-            var nv= nv_BUS.getListNhanVien_BUS().Find(c => c.MaNV == IdWhenClick);
+            var nv= nv_BUS.getListNhanVien_BUS().Find(c => c.MaNV == IdWhenClickNV);
             if (MessageBox.Show($"bạn muốn xóa tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
@@ -129,6 +132,11 @@ namespace GUI_QLBH
             flag = 3;
         }
         #endregion
+
+        void loadDGV_Khachhang()
+        {
+           // var lisShowKN= from a in  
+        }
     }
 
 
