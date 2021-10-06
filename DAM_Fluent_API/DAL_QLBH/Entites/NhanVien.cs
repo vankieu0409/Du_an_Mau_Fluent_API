@@ -11,7 +11,7 @@ namespace DAL_QLBH.Entites
         public int Id { get; set; }
         [Key]
         [StringLength(20)]
-        public string DienThoai { get; set; }
+        public string MaNV { get; set; }
         [Required]
         [StringLength(50)]
         public string Email { get; set; }

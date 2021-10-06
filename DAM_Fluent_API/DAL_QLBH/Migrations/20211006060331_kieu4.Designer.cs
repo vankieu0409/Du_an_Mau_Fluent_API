@@ -3,14 +3,16 @@ using DAL_QLBH.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL_QLBH.Migrations
 {
     [DbContext(typeof(DBContext_kieu))]
-    partial class DBContext_kieuModelSnapshot : ModelSnapshot
+    [Migration("20211006060331_kieu4")]
+    partial class kieu4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

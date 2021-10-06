@@ -29,20 +29,20 @@ namespace BUS_QLBH.BUS_SeVice
         public string AddNhanvien_BUS(NhanVien nv)
         {
             nv.Id = lstNhanVienBUS.Max(c => c.Id) + 1;
-            nv.DienThoai = "NV" + nv.Id;
+            nv.MaNV = "NV" + nv.Id;
             lstNhanVienBUS.Add(nv);// Add thêm vào list
             return dalNhanVien.AddNhanvien(nv);
         }
 
         public string EditNhanVien_BUS(NhanVien nv)
         {
-            lstNhanVienBUS[lstNhanVienBUS.FindIndex(c => c.DienThoai == nv.DienThoai)] = nv;
+            lstNhanVienBUS[lstNhanVienBUS.FindIndex(c => c.MaNV == nv.MaNV)] = nv;
             return dalNhanVien.EditNhanVien(nv);
         }
 
         public string DeleteNhanVien_BUS(NhanVien nv)
         {
-            lstNhanVienBUS.RemoveAt(lstNhanVienBUS.FindIndex(c => c.DienThoai == nv.DienThoai));
+            lstNhanVienBUS.RemoveAt(lstNhanVienBUS.FindIndex(c => c.MaNV == nv.MaNV));
             return dalNhanVien.DeleteNhanVien(nv);
         }
 
