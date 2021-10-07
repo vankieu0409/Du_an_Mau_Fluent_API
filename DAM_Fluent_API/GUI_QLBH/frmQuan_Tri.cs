@@ -38,6 +38,9 @@ namespace GUI_QLBH
 
             #endregion
 
+            KH_Bus = new ServiceKhachHang_BUS();
+            loadDGV_Khachhang();
+
 
         }
 
@@ -135,7 +138,17 @@ namespace GUI_QLBH
 
         void loadDGV_Khachhang()
         {
-           // var lisShowKN= from a in  
+            DGV_KhachHang.ColumnCount = 5;
+            DGV_KhachHang.Columns[0].Name = "Tên Khách hàng";
+            DGV_KhachHang.Columns[1].Name = "Số điện thoại";
+            DGV_KhachHang.Columns[2].Name = "Giới tính";
+            DGV_KhachHang.Columns[3].Name = "Địa Chỉ";
+            DGV_KhachHang.Columns[4].Name = "Nhân Viên tiếp";
+            DGV_KhachHang.Rows.Clear();
+            foreach (var x in KH_Bus.GetListKaKhachHangs())
+            {
+                DGV_KhachHang.Rows.Add(x.TenKhach, x.DienThoai, x.GioiTinh, x.DiaChi, x.NameNV);
+            }
         }
     }
 
