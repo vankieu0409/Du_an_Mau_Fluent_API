@@ -19,17 +19,23 @@ namespace GUI_QLBH
     {
         private string Error = " Thông báo của UBND xã Tuân Chính";
         private int flag = 0;
-        private string IdWhenClickNV;
+
         private NhanVien NvForKH;
         #region TAB_PAPE_NHÂN VIÊN
         private IServiceNhanVien_BUS nv_BUS;
-        private List<NhanVien> listNhanViens;
-
+        private string IdWhenClickNV;
         #endregion
+
+        #region TAB KHÁCH HÀNG
 
         private IServiceKhachHang_BUS KH_Bus;
         private string IdWhenClickkh;
 
+
+        #endregion
+
+        IServiceSanPham_BUS sp_BUS;
+        private string IdWhenClick_SP;
         public frmQuan_Tri()
         {
             InitializeComponent();
@@ -37,16 +43,20 @@ namespace GUI_QLBH
             #region TAB_PAPE_NHÂN VIÊN
 
             nv_BUS = new ServiceNhanVien_BUS();
-            listNhanViens = new List<NhanVien>();
             rbtn_nam_Khach.Checked = true;
             Cbx_HoatDong.Checked = true;
             loatDAtaNHANVIEN();
 
             #endregion
 
+            #region TAB KHÁCH HÀNG
+
             KH_Bus = new ServiceKhachHang_BUS();
             loadDGV_Khachhang();
 
+            #endregion
+
+            sp_BUS = new ServiceSanPham_BUS();
 
         }
 
@@ -301,6 +311,12 @@ namespace GUI_QLBH
         }
 
         #endregion
+
+        void loadData_SP()
+        {
+            DGV_hang.ColumnCount = 5;
+            DGV_hang.Columns[0].Name = "  Tên Sản Phẩm";
+        }
     }
 }
 

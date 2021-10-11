@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Entites\" />
-    <Folder Include="Sevice\" />
   </ItemGroup>
 
   <ItemGroup>

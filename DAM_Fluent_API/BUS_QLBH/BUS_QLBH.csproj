@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BUS_SeVice\" />
-    <Folder Include="BUS_Interface\" />
-    <Folder Include="models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DAL_QLBH\DAL_QLBH.csproj" />
   </ItemGroup>
 
