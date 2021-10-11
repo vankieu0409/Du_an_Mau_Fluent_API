@@ -57,6 +57,7 @@ namespace GUI_QLBH
             #endregion
 
             sp_BUS = new ServiceSanPham_BUS();
+            loadData_SP();
 
         }
 
@@ -314,8 +315,23 @@ namespace GUI_QLBH
 
         void loadData_SP()
         {
-            DGV_hang.ColumnCount = 5;
+            DGV_hang.ColumnCount = 7;
             DGV_hang.Columns[0].Name = "  Tên Sản Phẩm";
+            DGV_hang.Columns[1].Name = "  Số Lượng";
+            DGV_hang.Columns[2].Name = "  Đơn Giá Nhập ";
+            DGV_hang.Columns[3].Name = "  Đơn Giá Xuất";
+            DGV_hang.Columns[4].Name = "  Ghi Chú ";
+            DGV_hang.Columns[5].Name = " Nhân Viên bán";
+            DGV_hang.Columns[6].Name = " Mã hàng";
+            DGV_hang.Columns[6].Visible = false;
+            DGV_hang.Rows.Clear();
+            
+            foreach (var x in sp_BUS.getlisHangs())
+            {
+                DGV_hang.Rows.Add(x.TenHang, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
+                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv), x.MaHang);
+            }
+
         }
     }
 }

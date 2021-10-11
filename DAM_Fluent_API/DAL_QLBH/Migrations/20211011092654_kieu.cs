@@ -28,8 +28,8 @@ namespace DAL_QLBH.Migrations
                 name: "HANG",
                 columns: table => new
                 {
-                    MaHang = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaHang = table.Column<int>(type: "int", nullable: false),
+                    
                     TenHang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
                     DonGiaBan = table.Column<double>(type: "float", nullable: false),

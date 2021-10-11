@@ -6,8 +6,7 @@ namespace DAL_QLBH.Entites
     public class Hang
     {
        [Key]
-       [Required]
-        public int MaHang { get; set; }
+       public int MaHang { get; set; }
         [StringLength(50)]
         public string TenHang { get; set; }
         public int SoLuong { get; set; }
@@ -15,10 +14,10 @@ namespace DAL_QLBH.Entites
         public double DonGiaNhap { get; set; }
         [Required]
         [StringLength(400)]
-        public string HinhAnh { get; set; }
+        public string? HinhAnh { get; set; }
         [Required]
         [StringLength(20)]
-        public string GhiChu { get; set; }
+        public string? GhiChu { get; set; }
         [Required]
         public bool trangthai { get; set; }
        

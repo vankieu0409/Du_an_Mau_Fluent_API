@@ -1,0 +1,15 @@
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\bin\Debug\net5.0\DAL_QLBH.deps.json
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\bin\Debug\net5.0\DAL_QLBH.runtimeconfig.json
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\bin\Debug\net5.0\DAL_QLBH.runtimeconfig.dev.json
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\bin\Debug\net5.0\DAL_QLBH.dll
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\bin\Debug\net5.0\ref\DAL_QLBH.dll
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\bin\Debug\net5.0\DAL_QLBH.pdb
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.csproj.AssemblyReference.cache
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.GeneratedMSBuildEditorConfig.editorconfig
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.AssemblyInfoInputs.cache
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.AssemblyInfo.cs
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.csproj.CoreCompileInputs.cache
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.dll
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\ref\DAL_QLBH.dll
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.pdb
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\DAL_QLBH\obj\Debug\net5.0\DAL_QLBH.genruntimeconfig.cache

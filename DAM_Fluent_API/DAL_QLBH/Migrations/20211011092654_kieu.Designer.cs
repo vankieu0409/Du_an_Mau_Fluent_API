@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_QLBH.Migrations
 {
     [DbContext(typeof(DBContext_kieu))]
-    [Migration("20211006103828_kieu")]
+    [Migration("20211011092654_kieu")]
     partial class kieu
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
