@@ -42,7 +42,6 @@ namespace GUI_QLBH
             this.btn_Edit = new System.Windows.Forms.Button();
             this.btn_delete = new System.Windows.Forms.Button();
             this.btn_them = new System.Windows.Forms.Button();
-            this.btn_Search = new System.Windows.Forms.Button();
             this.txt_Search = new System.Windows.Forms.TextBox();
             this.DGV_Nhanvien = new System.Windows.Forms.DataGridView();
             this.rbtn_QuanTri = new System.Windows.Forms.RadioButton();
@@ -89,7 +88,6 @@ namespace GUI_QLBH
             this.btn_SuaKhach = new System.Windows.Forms.Button();
             this.btn_XoaKhach = new System.Windows.Forms.Button();
             this.btn_ThemKhach = new System.Windows.Forms.Button();
-            this.btn_SearchKhach = new System.Windows.Forms.Button();
             this.txt_TimKhach = new System.Windows.Forms.TextBox();
             this.DGV_KhachHang = new System.Windows.Forms.DataGridView();
             this.rbtn_Nu_Khach = new System.Windows.Forms.RadioButton();
@@ -137,7 +135,6 @@ namespace GUI_QLBH
             this.tb_NhanVien.Controls.Add(this.btn_Edit);
             this.tb_NhanVien.Controls.Add(this.btn_delete);
             this.tb_NhanVien.Controls.Add(this.btn_them);
-            this.tb_NhanVien.Controls.Add(this.btn_Search);
             this.tb_NhanVien.Controls.Add(this.txt_Search);
             this.tb_NhanVien.Controls.Add(this.DGV_Nhanvien);
             this.tb_NhanVien.Controls.Add(this.rbtn_QuanTri);
@@ -167,6 +164,7 @@ namespace GUI_QLBH
             this.cbx_KhongHD.TabIndex = 50;
             this.cbx_KhongHD.Text = "Ngừng Hoạt Động";
             this.cbx_KhongHD.UseVisualStyleBackColor = true;
+            this.cbx_KhongHD.CheckedChanged += new System.EventHandler(this.cbx_KhongHD_CheckedChanged);
             // 
             // Cbx_HoatDong
             // 
@@ -177,6 +175,7 @@ namespace GUI_QLBH
             this.Cbx_HoatDong.TabIndex = 49;
             this.Cbx_HoatDong.Text = "Hoạt Động";
             this.Cbx_HoatDong.UseVisualStyleBackColor = true;
+            this.Cbx_HoatDong.CheckedChanged += new System.EventHandler(this.Cbx_HoatDong_CheckedChanged);
             // 
             // txt_PassWord
             // 
@@ -226,6 +225,7 @@ namespace GUI_QLBH
             this.Btn_Skip.TabIndex = 44;
             this.Btn_Skip.Text = "Skip";
             this.Btn_Skip.UseVisualStyleBackColor = true;
+            this.Btn_Skip.Click += new System.EventHandler(this.Btn_Skip_Click);
             // 
             // btn_Save
             // 
@@ -271,25 +271,18 @@ namespace GUI_QLBH
             this.btn_them.UseVisualStyleBackColor = true;
             this.btn_them.Click += new System.EventHandler(this.btn_them_Click);
             // 
-            // btn_Search
-            // 
-            this.btn_Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Search.Location = new System.Drawing.Point(575, 493);
-            this.btn_Search.Name = "btn_Search";
-            this.btn_Search.Size = new System.Drawing.Size(94, 38);
-            this.btn_Search.TabIndex = 39;
-            this.btn_Search.Text = "Search";
-            this.btn_Search.UseVisualStyleBackColor = true;
-            // 
             // txt_Search
             // 
             this.txt_Search.BackColor = System.Drawing.SystemColors.Window;
-            this.txt_Search.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txt_Search.Location = new System.Drawing.Point(337, 493);
             this.txt_Search.Multiline = true;
             this.txt_Search.Name = "txt_Search";
             this.txt_Search.Size = new System.Drawing.Size(218, 38);
             this.txt_Search.TabIndex = 38;
+            this.txt_Search.Text = "tìm kiếm theo tên";
+            this.txt_Search.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txt_Search.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_Search_KeyUp);
+            this.txt_Search.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txt_Search_MouseDown);
             // 
             // DGV_Nhanvien
             // 
@@ -689,7 +682,6 @@ namespace GUI_QLBH
             this.tabPage3.Controls.Add(this.btn_SuaKhach);
             this.tabPage3.Controls.Add(this.btn_XoaKhach);
             this.tabPage3.Controls.Add(this.btn_ThemKhach);
-            this.tabPage3.Controls.Add(this.btn_SearchKhach);
             this.tabPage3.Controls.Add(this.txt_TimKhach);
             this.tabPage3.Controls.Add(this.DGV_KhachHang);
             this.tabPage3.Controls.Add(this.rbtn_Nu_Khach);
@@ -747,6 +739,7 @@ namespace GUI_QLBH
             this.btn_LuuKhach.TabIndex = 78;
             this.btn_LuuKhach.Text = "Save";
             this.btn_LuuKhach.UseVisualStyleBackColor = true;
+            this.btn_LuuKhach.Click += new System.EventHandler(this.btn_LuuKhach_Click);
             // 
             // btn_SuaKhach
             // 
@@ -757,6 +750,7 @@ namespace GUI_QLBH
             this.btn_SuaKhach.TabIndex = 77;
             this.btn_SuaKhach.Text = "Edit";
             this.btn_SuaKhach.UseVisualStyleBackColor = true;
+            this.btn_SuaKhach.Click += new System.EventHandler(this.btn_SuaKhach_Click);
             // 
             // btn_XoaKhach
             // 
@@ -767,6 +761,7 @@ namespace GUI_QLBH
             this.btn_XoaKhach.TabIndex = 76;
             this.btn_XoaKhach.Text = "Delete";
             this.btn_XoaKhach.UseVisualStyleBackColor = true;
+            this.btn_XoaKhach.Click += new System.EventHandler(this.btn_XoaKhach_Click);
             // 
             // btn_ThemKhach
             // 
@@ -777,16 +772,7 @@ namespace GUI_QLBH
             this.btn_ThemKhach.TabIndex = 75;
             this.btn_ThemKhach.Text = "Create";
             this.btn_ThemKhach.UseVisualStyleBackColor = true;
-            // 
-            // btn_SearchKhach
-            // 
-            this.btn_SearchKhach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_SearchKhach.Location = new System.Drawing.Point(572, 413);
-            this.btn_SearchKhach.Name = "btn_SearchKhach";
-            this.btn_SearchKhach.Size = new System.Drawing.Size(94, 38);
-            this.btn_SearchKhach.TabIndex = 74;
-            this.btn_SearchKhach.Text = "Search";
-            this.btn_SearchKhach.UseVisualStyleBackColor = true;
+            this.btn_ThemKhach.Click += new System.EventHandler(this.btn_ThemKhach_Click);
             // 
             // txt_TimKhach
             // 
@@ -797,6 +783,8 @@ namespace GUI_QLBH
             this.txt_TimKhach.Name = "txt_TimKhach";
             this.txt_TimKhach.Size = new System.Drawing.Size(218, 38);
             this.txt_TimKhach.TabIndex = 73;
+            this.txt_TimKhach.Text = "tim kiếm tên Khách hàng";
+            this.txt_TimKhach.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_TimKhach_KeyUp);
             // 
             // DGV_KhachHang
             // 
@@ -808,6 +796,7 @@ namespace GUI_QLBH
             this.DGV_KhachHang.RowTemplate.Height = 29;
             this.DGV_KhachHang.Size = new System.Drawing.Size(924, 254);
             this.DGV_KhachHang.TabIndex = 72;
+            this.DGV_KhachHang.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_KhachHang_CellClick);
             // 
             // rbtn_Nu_Khach
             // 
@@ -934,7 +923,6 @@ namespace GUI_QLBH
         private System.Windows.Forms.Button btn_SuaKhach;
         private System.Windows.Forms.Button btn_XoaKhach;
         private System.Windows.Forms.Button btn_ThemKhach;
-        private System.Windows.Forms.Button btn_SearchKhach;
         private System.Windows.Forms.TextBox txt_TimKhach;
         private System.Windows.Forms.DataGridView DGV_KhachHang;
         private System.Windows.Forms.RadioButton rbtn_Nu_Khach;
@@ -957,7 +945,6 @@ namespace GUI_QLBH
         private System.Windows.Forms.Button btn_Edit;
         private System.Windows.Forms.Button btn_delete;
         private System.Windows.Forms.Button btn_them;
-        private System.Windows.Forms.Button btn_Search;
         private System.Windows.Forms.TextBox txt_Search;
         private System.Windows.Forms.DataGridView DGV_Nhanvien;
         private System.Windows.Forms.RadioButton rbtn_QuanTri;

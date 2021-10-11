@@ -59,5 +59,15 @@ namespace GUI_QLBH.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ebf04e461ae23533202b1f5282c3a755 {
+            get {
+                object obj = ResourceManager.GetObject("ebf04e461ae23533202b1f5282c3a755", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

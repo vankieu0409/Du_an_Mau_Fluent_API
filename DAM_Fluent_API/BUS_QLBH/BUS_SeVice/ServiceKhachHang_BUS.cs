@@ -23,9 +23,14 @@ namespace BUS_QLBH.BUS_SeVice
             dalKhachHang = new Service_KhachHang();
             ListKhachHangs_BUS = new List<KhachHang>();
             listKH_NV = new List<KH_NV>();
-            ListKhachHangs_BUS = dalKhachHang.GetListKaKhachHangs();
-            listNhanViens_kh_bus = dalNhanVien.getListNhanVien();
+           ListKhachHangs_BUS = dalKhachHang.GetListKaKhachHangs();
+           // listNhanViens_kh_bus = dalNhanVien.getListNhanVien();
 
+        }
+
+        public List<KhachHang> GetlissKhachHangs()
+        {
+            return ListKhachHangs_BUS;
         }
         public List<KH_NV> GetListKaKhachHangs()
         {
