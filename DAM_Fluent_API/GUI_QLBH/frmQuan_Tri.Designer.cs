@@ -729,6 +729,7 @@ namespace GUI_QLBH
             this.button6.TabIndex = 79;
             this.button6.Text = "Skip";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // btn_LuuKhach
             // 
@@ -785,6 +786,7 @@ namespace GUI_QLBH
             this.txt_TimKhach.TabIndex = 73;
             this.txt_TimKhach.Text = "tim kiếm tên Khách hàng";
             this.txt_TimKhach.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_TimKhach_KeyUp);
+            this.txt_TimKhach.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txt_TimKhach_MouseDown);
             // 
             // DGV_KhachHang
             // 

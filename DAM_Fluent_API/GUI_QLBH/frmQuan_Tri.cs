@@ -193,6 +193,8 @@ namespace GUI_QLBH
         }
         #endregion
 
+        #region TAB Khách Hàng
+
         void loadDGV_Khachhang()
         {
             DGV_KhachHang.ColumnCount = 5;
@@ -278,11 +280,27 @@ namespace GUI_QLBH
             DGV_KhachHang.Columns[3].Name = "Địa Chỉ";
             DGV_KhachHang.Columns[4].Name = "Nhân Viên tiếp";
             DGV_KhachHang.Rows.Clear();
-            foreach (var x in KH_Bus.GetlissKhachHangs().Where(c=>c.TenKhach.StartsWith(txt_nameKhach.Text)))
+            foreach (var x in KH_Bus.GetlissKhachHangs().Where(c => c.TenKhach.StartsWith(txt_TimKhach.Text)))
             {
                 DGV_KhachHang.Rows.Add(x.TenKhach, x.DienThoai, x.GioiTinh == 1 ? "Nam" : x.GioiTinh == 0 ? "Nữ" : "", x.DiaChi, nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
             }
         }
+
+        private void txt_TimKhach_MouseDown(object sender, MouseEventArgs e)
+        {
+            txt_TimKhach.Text = "";
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            txt_TimKhach.Text = "";
+            txt_SDTKhach.Text = "";
+            txt_nameKhach.Text = "";
+            txt_diaChiNV.Text = "";
+            rbtn_nam_Khach.Checked = true;
+        }
+
+        #endregion
     }
 }
 
