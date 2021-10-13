@@ -48,6 +48,7 @@ namespace GUI_QLBH
                     quanTri.getNV_toKhachHang(nhanVien);
                     this.Hide();
                     quanTri.ShowDialog();
+                    this.Show();
                 }
             }
         }

@@ -672,6 +672,7 @@ namespace GUI_QLBH
             this.DGV_hang.RowTemplate.Height = 29;
             this.DGV_hang.Size = new System.Drawing.Size(924, 254);
             this.DGV_hang.TabIndex = 48;
+            this.DGV_hang.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_hang_CellContentClick);
             // 
             // tabPage3
             // 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace GUI_QLBH
     {
         private string Error = " Thông báo của UBND xã Tuân Chính";
         private int flag = 0;
-
+        MemoryStream mmst;
         private NhanVien NvForKH;
         #region TAB_PAPE_NHÂN VIÊN
         private IServiceNhanVien_BUS nv_BUS;
@@ -57,6 +58,7 @@ namespace GUI_QLBH
             #endregion
 
             sp_BUS = new ServiceSanPham_BUS();
+            mmst = new MemoryStream();
             loadData_SP();
 
         }
@@ -315,23 +317,96 @@ namespace GUI_QLBH
 
         void loadData_SP()
         {
+
             DGV_hang.ColumnCount = 7;
-            DGV_hang.Columns[0].Name = "  Tên Sản Phẩm";
-            DGV_hang.Columns[1].Name = "  Số Lượng";
-            DGV_hang.Columns[2].Name = "  Đơn Giá Nhập ";
-            DGV_hang.Columns[3].Name = "  Đơn Giá Xuất";
-            DGV_hang.Columns[4].Name = "  Ghi Chú ";
-            DGV_hang.Columns[5].Name = " Nhân Viên bán";
-            DGV_hang.Columns[6].Name = " Mã hàng";
-            DGV_hang.Columns[6].Visible = false;
-            DGV_hang.Rows.Clear();
+            DGV_hang.Columns[0].Name = " Mã hàng";
+            DGV_hang.Columns[0].Visible = false;
+            DGV_hang.Columns[1].Name = "  Tên Sản Phẩm";
+            DGV_hang.Columns[2].Name = "  Số Lượng";
+            DGV_hang.Columns[3].Name = "  Đơn Giá Nhập ";
+            DGV_hang.Columns[4].Name = "  Đơn Giá Xuất";
+            DGV_hang.Columns[5].Name = "  Ghi Chú ";
+            DGV_hang.Columns[6].Name = " Nhân Viên bán";
+            //DataGridViewImageColumn img = new DataGridViewImageColumn();
+            //img.HeaderText = "Hình ảnh đã tải lên";
+            //img.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            //Image image = Image.FromFile(mmst);
+            //img.Image = image;
+            //DGV_hang.Columns.Add(img);
+            //img.HeaderText = "Image";
+            //img.Name = "img";
             
-            foreach (var x in sp_BUS.getlisHangs())
+            //pictureBox1.Image.Save(mmst, pictureBox1.Image.RawFormat);
+            //byte[] img = mmst.ToArray();
+            //dataGridView1.Rows.Add(img);
+            DataGridViewButtonColumn button1 = new DataGridViewButtonColumn();
             {
-                DGV_hang.Rows.Add(x.TenHang, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
-                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv), x.MaHang);
+
+                button1.Name = "Dẫn Ảnh";
+                button1.HeaderText = "Dẫn Ảnh";
+                button1.Text = "Dẫn Ảnh";
+                button1.UseColumnTextForButtonValue = true; //dont forget this line
+                this.DGV_hang.Columns.Add(button1);
+
+            }
+            DataGridViewComboBoxColumn cbService = new DataGridViewComboBoxColumn();
+            {
+                cbService.Name = "Option";
+                cbService.HeaderText = " Option";
+                cbService.Items.Add("Create");
+                cbService.Items.Add("Edit");
+                cbService.Items.Add("Remove");
+
+                DGV_hang.Columns.Add(cbService);
             }
 
+            DataGridViewButtonColumn button = new DataGridViewButtonColumn();
+            {
+                button.Name = "Select";
+                button.HeaderText = "Select";
+                button.Text = "Select";
+                button.UseColumnTextForButtonValue = true; //dont forget this line
+                this.DGV_hang.Columns.Add(button);
+            }
+            DGV_hang.Rows.Clear();
+
+            foreach (var x in sp_BUS.getlisHangs())
+            {
+                DGV_hang.Rows.Add(x.MaHang, x.TenHang, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
+                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault(), x.HinhAnh);
+
+            }
+
+        }
+
+        private void DGV_hang_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.ColumnIndex == DGV_hang.Columns["Dẫn Ảnh"].Index)
+            {
+                
+            }
+            if (e.ColumnIndex == DGV_hang.Columns["Select"].Index)
+            {
+                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Create")
+                {
+                    int row = e.RowIndex;
+                    Hang sp = new Hang();
+                    sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
+                    sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
+                    sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
+                    sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
+                    sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
+                    sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                    sp.MaNV = nv_BUS.getListNhanVien_BUS()
+                        .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
+                        .Select(c => c.MaNV).FirstOrDefault();
+                    if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
+                    }
+                }
+            }
         }
     }
 }
