@@ -611,6 +611,7 @@ namespace GUI_QLBH
             this.Btn_SaveHang.TabIndex = 54;
             this.Btn_SaveHang.Text = "Save";
             this.Btn_SaveHang.UseVisualStyleBackColor = true;
+            this.Btn_SaveHang.Click += new System.EventHandler(this.Btn_SaveHang_Click);
             // 
             // btn_EditHang
             // 

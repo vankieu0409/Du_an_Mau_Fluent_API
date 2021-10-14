@@ -22,9 +22,12 @@ namespace GUI_QLBH
         private int flag = 0;
         MemoryStream mmst;
         private NhanVien NvForKH;
+
         #region TAB_PAPE_NHÂN VIÊN
+
         private IServiceNhanVien_BUS nv_BUS;
         private string IdWhenClickNV;
+
         #endregion
 
         #region TAB KHÁCH HÀNG
@@ -37,10 +40,12 @@ namespace GUI_QLBH
 
         IServiceSanPham_BUS sp_BUS;
         private string IdWhenClick_SP;
+
         public frmQuan_Tri()
         {
             InitializeComponent();
             NvForKH = new NhanVien();
+
             #region TAB_PAPE_NHÂN VIÊN
 
             nv_BUS = new ServiceNhanVien_BUS();
@@ -79,7 +84,10 @@ namespace GUI_QLBH
             DGV_Nhanvien.Rows.Clear();
             foreach (var x in nv_BUS.getListNhanVien_BUS())
             {
-                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 0 ? "Nhân Viên" : x.VaiTro == 1 ? "Quản trị" : "", x.TinhTrang == false ? "Ngừng Hoạt Động" : x.TinhTrang == true ? "Hoạt Động" : "", x.MatKhau, x.MaNV);
+                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi,
+                    x.VaiTro == 0 ? "Nhân Viên" : x.VaiTro == 1 ? "Quản trị" : "",
+                    x.TinhTrang == false ? "Ngừng Hoạt Động" : x.TinhTrang == true ? "Hoạt Động" : "", x.MatKhau,
+                    x.MaNV);
             }
 
         }
@@ -93,7 +101,8 @@ namespace GUI_QLBH
             nv.VaiTro = rbtn_QuanTri.Checked ? 0 : 1;
             nv.TinhTrang = Cbx_HoatDong.Checked ? true : false;
             nv.MatKhau = txt_PassWord.Text;
-            if (MessageBox.Show($"bạn muốn thêm tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
+            if (MessageBox.Show($"bạn muốn thêm tài Khoản nhân viên {nv.TenNv} chứ??", Error,
+                    MessageBoxButtons.YesNo) ==
                 DialogResult.Yes)
             {
                 MessageBox.Show(nv_BUS.AddNhanvien_BUS(nv), Error);
@@ -118,7 +127,9 @@ namespace GUI_QLBH
             rbtn_NhanVien.Checked = DGV_Nhanvien.Rows[rowindex].Cells[3].Value.ToString() == "Nhân Viên" ? true : false;
             rbtn_QuanTri.Checked = DGV_Nhanvien.Rows[rowindex].Cells[3].Value.ToString() == "Quản trị" ? true : false;
             Cbx_HoatDong.Checked = DGV_Nhanvien.Rows[rowindex].Cells[4].Value.ToString() == "Hoạt Động" ? true : false;
-            cbx_KhongHD.Checked = DGV_Nhanvien.Rows[rowindex].Cells[4].Value.ToString() == "Ngừng Hoạt Động" ? true : false;
+            cbx_KhongHD.Checked = DGV_Nhanvien.Rows[rowindex].Cells[4].Value.ToString() == "Ngừng Hoạt Động"
+                ? true
+                : false;
             txt_PassWord.Text = DGV_Nhanvien.Rows[rowindex].Cells[5].Value.ToString();
             IdWhenClickNV = DGV_Nhanvien.Rows[rowindex].Cells[6].Value.ToString();
         }
@@ -138,6 +149,7 @@ namespace GUI_QLBH
             {
                 MessageBox.Show(nv_BUS.EditNhanVien_BUS(nv), Error);
             }
+
             loatDAtaNHANVIEN();
             flag = 3;
         }
@@ -150,6 +162,7 @@ namespace GUI_QLBH
             {
                 MessageBox.Show(nv_BUS.DeleteNhanVien_BUS(nv), Error);
             }
+
             loatDAtaNHANVIEN();
             flag = 3;
         }
@@ -173,7 +186,10 @@ namespace GUI_QLBH
             DGV_Nhanvien.Rows.Clear();
             foreach (var x in nv_BUS.getListNhanVien_BUS().Where(c => c.TenNv.StartsWith(txt_Search.Text)))
             {
-                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi, x.VaiTro == 0 ? "Nhân Viên" : x.VaiTro == 1 ? "Quản trị" : "", x.TinhTrang == false ? "Ngừng Hoạt Động" : x.TinhTrang == true ? "Hoạt Động" : "", x.MatKhau, x.MaNV);
+                DGV_Nhanvien.Rows.Add(x.Email, x.TenNv, x.DiaChi,
+                    x.VaiTro == 0 ? "Nhân Viên" : x.VaiTro == 1 ? "Quản trị" : "",
+                    x.TinhTrang == false ? "Ngừng Hoạt Động" : x.TinhTrang == true ? "Hoạt Động" : "", x.MatKhau,
+                    x.MaNV);
             }
 
         }
@@ -204,6 +220,7 @@ namespace GUI_QLBH
                 Cbx_HoatDong.Checked = false;
             }
         }
+
         #endregion
 
         #region TAB Khách Hàng
@@ -219,13 +236,17 @@ namespace GUI_QLBH
             DGV_KhachHang.Rows.Clear();
             foreach (var x in KH_Bus.GetlissKhachHangs())
             {
-                DGV_KhachHang.Rows.Add(x.TenKhach, x.DienThoai, x.GioiTinh == 1 ? "Nam" : x.GioiTinh == 0 ? "Nữ" : "", x.DiaChi, nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
+                DGV_KhachHang.Rows.Add(x.TenKhach, x.DienThoai, x.GioiTinh == 1 ? "Nam" : x.GioiTinh == 0 ? "Nữ" : "",
+                    x.DiaChi,
+                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
             }
         }
+
         public NhanVien getNV_toKhachHang(NhanVien nv)
         {
             return NvForKH = nv;
         }
+
         private void btn_ThemKhach_Click(object sender, EventArgs e)
         {
             KhachHang kh = new KhachHang();
@@ -240,6 +261,7 @@ namespace GUI_QLBH
             {
                 MessageBox.Show(KH_Bus.Add_Khachhang(kh), Error);
             }
+
             loadDGV_Khachhang();
         }
 
@@ -258,20 +280,24 @@ namespace GUI_QLBH
         private void btn_SuaKhach_Click(object sender, EventArgs e)
         {
             var kh1 = KH_Bus.GetlissKhachHangs().FirstOrDefault(c => c.DienThoai == IdWhenClickkh);
-            if (MessageBox.Show($"bạn có muốn Sửa thông tin của khách hàng {kh1.TenKhach} Không?", Error, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show($"bạn có muốn Sửa thông tin của khách hàng {kh1.TenKhach} Không?", Error,
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 MessageBox.Show(KH_Bus.Edit_KhachHang(kh1), Error);
             }
+
             loadDGV_Khachhang();
         }
 
         private void btn_XoaKhach_Click(object sender, EventArgs e)
         {
             var kh1 = KH_Bus.GetlissKhachHangs().FirstOrDefault(c => c.DienThoai == IdWhenClickkh);
-            if (MessageBox.Show($"bạn có muốn Xóa thông tin của khách hàng {kh1.TenKhach} Không?", Error, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show($"bạn có muốn Xóa thông tin của khách hàng {kh1.TenKhach} Không?", Error,
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 MessageBox.Show(KH_Bus.Delete_KhachHang(kh1), Error);
             }
+
             loadDGV_Khachhang();
         }
 
@@ -281,6 +307,7 @@ namespace GUI_QLBH
             {
                 MessageBox.Show(KH_Bus.Save_KhachHang(), Error);
             }
+
             loadDGV_Khachhang();
         }
 
@@ -295,7 +322,9 @@ namespace GUI_QLBH
             DGV_KhachHang.Rows.Clear();
             foreach (var x in KH_Bus.GetlissKhachHangs().Where(c => c.TenKhach.StartsWith(txt_TimKhach.Text)))
             {
-                DGV_KhachHang.Rows.Add(x.TenKhach, x.DienThoai, x.GioiTinh == 1 ? "Nam" : x.GioiTinh == 0 ? "Nữ" : "", x.DiaChi, nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
+                DGV_KhachHang.Rows.Add(x.TenKhach, x.DienThoai, x.GioiTinh == 1 ? "Nam" : x.GioiTinh == 0 ? "Nữ" : "",
+                    x.DiaChi,
+                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
             }
         }
 
@@ -330,13 +359,13 @@ namespace GUI_QLBH
             //DataGridViewImageColumn img = new DataGridViewImageColumn();
             //img.HeaderText = "Hình ảnh đã tải lên";
             //img.ImageLayout = DataGridViewImageCellLayout.Stretch;
-            //Image image = Image.FromFile(mmst);
+            //Image image = Image.FromFile("E:\\zDownLoad\\me_loan.jpeg");
             //img.Image = image;
             //DGV_hang.Columns.Add(img);
             //img.HeaderText = "Image";
             //img.Name = "img";
-            
-            //pictureBox1.Image.Save(mmst, pictureBox1.Image.RawFormat);
+
+            //DGV_hang.Ima.Save(mmst, DGV_hang.Image.RawFormat);
             //byte[] img = mmst.ToArray();
             //dataGridView1.Rows.Add(img);
             DataGridViewButtonColumn button1 = new DataGridViewButtonColumn();
@@ -373,7 +402,8 @@ namespace GUI_QLBH
             foreach (var x in sp_BUS.getlisHangs())
             {
                 DGV_hang.Rows.Add(x.MaHang, x.TenHang, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
-                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault(), x.HinhAnh);
+                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault(),
+                    x.HinhAnh);
 
             }
 
@@ -384,8 +414,9 @@ namespace GUI_QLBH
 
             if (e.ColumnIndex == DGV_hang.Columns["Dẫn Ảnh"].Index)
             {
-                
+
             }
+
             if (e.ColumnIndex == DGV_hang.Columns["Select"].Index)
             {
                 if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Create")
@@ -406,6 +437,52 @@ namespace GUI_QLBH
                         MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
                     }
                 }
+
+                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Edit")
+                {
+                    int row = e.RowIndex;
+                    var sp = sp_BUS.getlisHangs()
+                        .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
+                        .FirstOrDefault();
+
+                    sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
+                    sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
+                    sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
+                    sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
+                    sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                    sp.MaNV = nv_BUS.getListNhanVien_BUS()
+                        .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
+                        .Select(c => c.MaNV).FirstOrDefault();
+                    if (MessageBox.Show($"bạn có sửa thông tin SP {sp.TenHang} thêm không??", Error,
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        MessageBox.Show(sp_BUS.Edit_SanPham(sp), Error);
+                    }
+                }
+
+                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Remove")
+                {
+                    int row = e.RowIndex;
+                    var sp = sp_BUS.getlisHangs()
+                        .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
+                        .FirstOrDefault();
+                    if (MessageBox.Show($"bạn có muốn xóa SP {sp.TenHang} thêm không??", Error,
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        MessageBox.Show(sp_BUS.delete_SanPham(sp), Error);
+                    }
+                }
+
+                loadData_SP();
+            }
+        }
+
+        private void Btn_SaveHang_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show($"bạn có lưu không??", Error,
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                MessageBox.Show(sp_BUS.save_SanPham(), Error);
             }
         }
     }
