@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using DAL_QLBH.Entites;
 
 namespace BUS_QLBH.BUS_Interface

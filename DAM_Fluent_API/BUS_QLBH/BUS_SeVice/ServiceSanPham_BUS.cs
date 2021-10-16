@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+
 using BUS_QLBH.BUS_Interface;
+
 using DAL_QLBH.Entites;
 using DAL_QLBH.InterfaceService;
 using DAL_QLBH.Sevice;
 
 namespace BUS_QLBH.BUS_SeVice
 {
-    public class ServiceSanPham_BUS:IServiceSanPham_BUS
+    public class ServiceSanPham_BUS : IServiceSanPham_BUS
     {
         private List<Hang> LstSanPhams;
         private IServiceSanPham SP;

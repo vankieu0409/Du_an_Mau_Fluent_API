@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace GUI_QLBH
         #endregion
 
         IServiceSanPham_BUS sp_BUS;
-        private string IdWhenClick_SP;
+        private string pathImage;
 
         public frmQuan_Tri()
         {
@@ -64,6 +65,7 @@ namespace GUI_QLBH
 
             sp_BUS = new ServiceSanPham_BUS();
             mmst = new MemoryStream();
+            pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
             loadData_SP();
 
         }
@@ -347,7 +349,7 @@ namespace GUI_QLBH
         void loadData_SP()
         {
 
-            DGV_hang.ColumnCount = 7;
+            DGV_hang.ColumnCount = 8;
             DGV_hang.Columns[0].Name = " Mã hàng";
             DGV_hang.Columns[0].Visible = false;
             DGV_hang.Columns[1].Name = "  Tên Sản Phẩm";
@@ -356,18 +358,20 @@ namespace GUI_QLBH
             DGV_hang.Columns[4].Name = "  Đơn Giá Xuất";
             DGV_hang.Columns[5].Name = "  Ghi Chú ";
             DGV_hang.Columns[6].Name = " Nhân Viên bán";
-            //DataGridViewImageColumn img = new DataGridViewImageColumn();
-            //img.HeaderText = "Hình ảnh đã tải lên";
-            //img.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            DGV_hang.Columns[7].Name = "Ảnh";
+            DGV_hang.Columns[7].Visible = false;
+
+            DataGridViewImageColumn img = new DataGridViewImageColumn();
+            img.HeaderText = "Hình ảnh đã tải lên";
+            img.ImageLayout = DataGridViewImageCellLayout.Stretch;
+
             //Image image = Image.FromFile("E:\\zDownLoad\\me_loan.jpeg");
             //img.Image = image;
             //DGV_hang.Columns.Add(img);
             //img.HeaderText = "Image";
             //img.Name = "img";
 
-            //DGV_hang.Ima.Save(mmst, DGV_hang.Image.RawFormat);
-            //byte[] img = mmst.ToArray();
-            //dataGridView1.Rows.Add(img);
+
             DataGridViewButtonColumn button1 = new DataGridViewButtonColumn();
             {
 
@@ -409,82 +413,130 @@ namespace GUI_QLBH
 
         }
 
+        Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
+            ms.Write(byteArrayIn, 0, byteArrayIn.Length);
+            return Image.FromStream(ms, true); //Exception occurs here
+        }
+
+        byte[] CopyImageToByteArray(string pathIMG)
+        {
+            Image theImage = Image.FromFile(pathIMG);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                theImage.Save(memoryStream, ImageFormat.Png);
+                return memoryStream.ToArray();
+            }
+        }
+
         private void DGV_hang_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
             if (e.ColumnIndex == DGV_hang.Columns["Dẫn Ảnh"].Index)
             {
-
-            }
-
-            if (e.ColumnIndex == DGV_hang.Columns["Select"].Index)
-            {
-                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Create")
+                // open file dialog   
+                OpenFileDialog open = new OpenFileDialog();
+                // image filters  
+                open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                if (open.ShowDialog() == DialogResult.OK)
                 {
-                    int row = e.RowIndex;
-                    Hang sp = new Hang();
-                    sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
-                    sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
-                    sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
-                    sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
-                    sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
-                    sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                    sp.MaNV = nv_BUS.getListNhanVien_BUS()
-                        .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
-                        .Select(c => c.MaNV).FirstOrDefault();
-                    if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
-                    }
+                    // display image in picture box  
+                    pt_hang.Image = new Bitmap(open.FileName);
+                    pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
+                    // image file path  
+                    pathImage = open.FileName;
+
                 }
 
-                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Edit")
+                if (e.ColumnIndex == DGV_hang.Columns["Select"].Index)
                 {
-                    int row = e.RowIndex;
-                    var sp = sp_BUS.getlisHangs()
-                        .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
-                        .FirstOrDefault();
-
-                    sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
-                    sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
-                    sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
-                    sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
-                    sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                    sp.MaNV = nv_BUS.getListNhanVien_BUS()
-                        .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
-                        .Select(c => c.MaNV).FirstOrDefault();
-                    if (MessageBox.Show($"bạn có sửa thông tin SP {sp.TenHang} thêm không??", Error,
-                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Create")
                     {
-                        MessageBox.Show(sp_BUS.Edit_SanPham(sp), Error);
+                        int row = e.RowIndex;
+                        Hang sp = new Hang();
+                        sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
+                        sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
+                        sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
+                        sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
+                        sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
+                        sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                        sp.HinhAnh = 
+                        sp.MaNV = nv_BUS.getListNhanVien_BUS()
+                            .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
+                            .Select(c => c.MaNV).FirstOrDefault();
+                        if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) ==
+                            DialogResult.Yes)
+                        {
+                            MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
+                        }
                     }
-                }
 
-                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Remove")
-                {
-                    int row = e.RowIndex;
-                    var sp = sp_BUS.getlisHangs()
-                        .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
-                        .FirstOrDefault();
-                    if (MessageBox.Show($"bạn có muốn xóa SP {sp.TenHang} thêm không??", Error,
-                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Edit")
                     {
-                        MessageBox.Show(sp_BUS.delete_SanPham(sp), Error);
-                    }
-                }
+                        int row = e.RowIndex;
+                        var sp = sp_BUS.getlisHangs()
+                            .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
+                            .FirstOrDefault();
 
-                loadData_SP();
+                        sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
+                        sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
+                        sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
+                        sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
+                        sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                        sp.MaNV = nv_BUS.getListNhanVien_BUS()
+                            .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
+                            .Select(c => c.MaNV).FirstOrDefault();
+                        if (MessageBox.Show($"bạn có sửa thông tin SP {sp.TenHang} thêm không??", Error,
+                            MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            MessageBox.Show(sp_BUS.Edit_SanPham(sp), Error);
+                        }
+                    }
+
+                    if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Remove")
+                    {
+                        int row = e.RowIndex;
+                        var sp = sp_BUS.getlisHangs()
+                            .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
+                            .FirstOrDefault();
+                        if (MessageBox.Show($"bạn có muốn xóa SP {sp.TenHang} thêm không??", Error,
+                            MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            MessageBox.Show(sp_BUS.delete_SanPham(sp), Error);
+                        }
+                    }
+
+                    loadData_SP();
+                }
             }
         }
 
         private void Btn_SaveHang_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show($"bạn có lưu không??", Error,
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                MessageBox.Show(sp_BUS.save_SanPham(), Error);
+                if (MessageBox.Show($"bạn có lưu không??", Error,
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    MessageBox.Show(sp_BUS.save_SanPham(), Error);
+                }
             }
-        }
+
+            private void btn_SearchHang_Click(object sender, EventArgs e)
+            {
+                // open file dialog   
+                OpenFileDialog open = new OpenFileDialog();
+                // image filters  
+                open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                if (open.ShowDialog() == DialogResult.OK)
+                {
+                    // display image in picture box  
+                    pt_hang.Image = new Bitmap(open.FileName);
+                    pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
+                    // image file path  
+                    txt_linkAnh.Text = open.FileName;
+                }
+            }
+        
     }
 }
 

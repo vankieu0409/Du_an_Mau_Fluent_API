@@ -28,13 +28,13 @@ namespace DAL_QLBH.Migrations
                 name: "HANG",
                 columns: table => new
                 {
-                    MaHang = table.Column<int>(type: "int", nullable: false),
-                    
+                    MaHang = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TenHang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
                     DonGiaBan = table.Column<double>(type: "float", nullable: false),
                     DonGiaNhap = table.Column<double>(type: "float", nullable: false),
-                    HinhAnh = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
+                    HinhAnh = table.Column<byte>(type: "tinyint", maxLength: 400, nullable: false),
                     GhiChu = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     trangthai = table.Column<bool>(type: "bit", nullable: false),
                     MaNV = table.Column<string>(type: "nvarchar(20)", nullable: true)

@@ -434,6 +434,7 @@ namespace GUI_QLBH
             this.pt_hang.Location = new System.Drawing.Point(706, 47);
             this.pt_hang.Name = "pt_hang";
             this.pt_hang.Size = new System.Drawing.Size(239, 168);
+            this.pt_hang.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pt_hang.TabIndex = 73;
             this.pt_hang.TabStop = false;
             // 
@@ -652,6 +653,7 @@ namespace GUI_QLBH
             this.btn_SearchHang.TabIndex = 50;
             this.btn_SearchHang.Text = "Search";
             this.btn_SearchHang.UseVisualStyleBackColor = true;
+            this.btn_SearchHang.Click += new System.EventHandler(this.btn_SearchHang_Click);
             // 
             // txt_timhang
             // 
@@ -987,5 +989,7 @@ namespace GUI_QLBH
         private System.Windows.Forms.Button btn_SearchHang;
         private System.Windows.Forms.TextBox txt_timhang;
         private System.Windows.Forms.DataGridView DGV_hang;
+
+        
     }
 }

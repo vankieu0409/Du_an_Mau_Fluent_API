@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
 using DAL_QLBH.DBContext;
 using DAL_QLBH.Entites;
 using DAL_QLBH.InterfaceService;
 
 namespace DAL_QLBH.Sevice
 {
-    public class Service_SanPham:IServiceSanPham
+    public class Service_SanPham : IServiceSanPham
     {
         private DBContext_kieu Db;
         private List<Hang> LstSanPhams;

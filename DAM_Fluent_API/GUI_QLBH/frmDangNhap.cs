@@ -43,7 +43,7 @@ namespace GUI_QLBH
             {
                 if (nhanVien.VaiTro == 1)
                 {
-                    frmQuan_Tri quanTri = new frmQuan_Tri();
+                   frmQuan_Tri quanTri = new frmQuan_Tri();
                     MessageBox.Show(" Đăng nhập thành công!", Error);
                     quanTri.getNV_toKhachHang(nhanVien);
                     this.Hide();
