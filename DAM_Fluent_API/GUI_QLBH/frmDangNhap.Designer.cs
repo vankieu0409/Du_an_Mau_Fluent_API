@@ -65,7 +65,6 @@ namespace GUI_QLBH
             // 
             // pictureBox1
             // 
-            this.pictureBox1.ErrorImage = global::GUI_QLBH.Properties.Resources.ebf04e461ae23533202b1f5282c3a755;
             this.pictureBox1.Location = new System.Drawing.Point(195, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(151, 118);

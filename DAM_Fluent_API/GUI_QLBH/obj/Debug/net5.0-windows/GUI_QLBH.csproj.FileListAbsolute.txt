@@ -58,3 +58,4 @@ E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\obj\Debug\net5.0-wind
 E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\obj\Debug\net5.0-windows\GUI_QLBH.pdb
 E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\obj\Debug\net5.0-windows\GUI_QLBH.genruntimeconfig.cache
 E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\obj\Debug\net5.0-windows\GUI_QLBH.csproj.CopyComplete
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\obj\Debug\net5.0-windows\GUI_QLBH.frmQuenMatKhau.resources
