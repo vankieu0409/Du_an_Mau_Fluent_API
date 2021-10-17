@@ -10,10 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using AForge.Video;
+using AForge.Video.DirectShow;
+
 using BUS_QLBH.BUS_Interface;
 using BUS_QLBH.BUS_SeVice;
 
 using DAL_QLBH.Entites;
+
+using ZXing;
 
 namespace GUI_QLBH
 {
@@ -41,6 +46,8 @@ namespace GUI_QLBH
 
         IServiceSanPham_BUS sp_BUS;
         private string pathImage;
+        FilterInfoCollection filterInfoCollection;
+        VideoCaptureDevice videoCaptureDevice;
 
         public frmQuan_Tri()
         {
@@ -271,11 +278,11 @@ namespace GUI_QLBH
         {
             int rowindex = e.RowIndex;
             if (rowindex == KH_Bus.GetlissKhachHangs().Count || rowindex < 0) return;
-            txt_SDTKhach.Text = DGV_KhachHang.Rows[rowindex].Cells[1].ToString();
-            txt_nameKhach.Text = DGV_KhachHang.Rows[rowindex].Cells[0].ToString();
-            rbtn_nam_Khach.Checked = DGV_KhachHang.Rows[rowindex].Cells[2].ToString() == "Nam" ? true : false;
-            rbtn_Nu_Khach.Checked = DGV_KhachHang.Rows[rowindex].Cells[2].ToString() == "Nữ" ? true : false;
-            txt_AddressKhach.Text = DGV_KhachHang.Rows[rowindex].Cells[3].ToString();
+            txt_SDTKhach.Text = DGV_KhachHang.Rows[rowindex].Cells[1].Value.ToString();
+            txt_nameKhach.Text = DGV_KhachHang.Rows[rowindex].Cells[0].Value.ToString();
+            rbtn_nam_Khach.Checked = DGV_KhachHang.Rows[rowindex].Cells[2].Value.ToString() == "Nam" ? true : false;
+            rbtn_Nu_Khach.Checked = DGV_KhachHang.Rows[rowindex].Cells[2].Value.ToString() == "Nữ" ? true : false;
+            txt_AddressKhach.Text = DGV_KhachHang.Rows[rowindex].Cells[3].Value.ToString();
             IdWhenClickkh = txt_SDTKhach.Text;
         }
 
@@ -448,97 +455,141 @@ namespace GUI_QLBH
                     pathImage = open.FileName;
 
                 }
+            }
 
-                if (e.ColumnIndex == DGV_hang.Columns["Select"].Index)
+            if (e.ColumnIndex == DGV_hang.Columns["Select"].Index)
+            {
+                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Create")
                 {
-                    if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Create")
-                    {
-                        int row = e.RowIndex;
-                        Hang sp = new Hang();
-                        sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
-                        sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
-                        sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
-                        sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
-                        sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
-                        sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                        sp.HinhAnh = 
+                    int row = e.RowIndex;
+                    Hang sp = new Hang();
+                    sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
+                    sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
+                    sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
+                    sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
+                    sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
+                    sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                    sp.HinhAnh =
                         sp.MaNV = nv_BUS.getListNhanVien_BUS()
                             .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
                             .Select(c => c.MaNV).FirstOrDefault();
-                        if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) ==
-                            DialogResult.Yes)
-                        {
-                            MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
-                        }
-                    }
-
-                    if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Edit")
+                    if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) ==
+                        DialogResult.Yes)
                     {
-                        int row = e.RowIndex;
-                        var sp = sp_BUS.getlisHangs()
-                            .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
-                            .FirstOrDefault();
-
-                        sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
-                        sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
-                        sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
-                        sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
-                        sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                        sp.MaNV = nv_BUS.getListNhanVien_BUS()
-                            .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
-                            .Select(c => c.MaNV).FirstOrDefault();
-                        if (MessageBox.Show($"bạn có sửa thông tin SP {sp.TenHang} thêm không??", Error,
-                            MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            MessageBox.Show(sp_BUS.Edit_SanPham(sp), Error);
-                        }
+                        MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
                     }
-
-                    if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Remove")
-                    {
-                        int row = e.RowIndex;
-                        var sp = sp_BUS.getlisHangs()
-                            .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
-                            .FirstOrDefault();
-                        if (MessageBox.Show($"bạn có muốn xóa SP {sp.TenHang} thêm không??", Error,
-                            MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            MessageBox.Show(sp_BUS.delete_SanPham(sp), Error);
-                        }
-                    }
-
-                    loadData_SP();
                 }
+
+                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Edit")
+                {
+                    int row = e.RowIndex;
+                    var sp = sp_BUS.getlisHangs()
+                        .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
+                        .FirstOrDefault();
+
+                    sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
+                    sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
+                    sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
+                    sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
+                    sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                    sp.MaNV = nv_BUS.getListNhanVien_BUS()
+                        .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
+                        .Select(c => c.MaNV).FirstOrDefault();
+                    if (MessageBox.Show($"bạn có sửa thông tin SP {sp.TenHang} thêm không??", Error,
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        MessageBox.Show(sp_BUS.Edit_SanPham(sp), Error);
+                    }
+                }
+
+                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Remove")
+                {
+                    int row = e.RowIndex;
+                    var sp = sp_BUS.getlisHangs()
+                        .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
+                        .FirstOrDefault();
+                    if (MessageBox.Show($"bạn có muốn xóa SP {sp.TenHang} thêm không??", Error,
+                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        MessageBox.Show(sp_BUS.delete_SanPham(sp), Error);
+                    }
+                }
+
+                loadData_SP();
             }
         }
 
-        private void Btn_SaveHang_Click(object sender, EventArgs e)
-            {
-                if (MessageBox.Show($"bạn có lưu không??", Error,
-                    MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    MessageBox.Show(sp_BUS.save_SanPham(), Error);
-                }
-            }
 
-            private void btn_SearchHang_Click(object sender, EventArgs e)
+        private void Btn_SaveHang_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show($"bạn có lưu không??", Error,
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                // open file dialog   
-                OpenFileDialog open = new OpenFileDialog();
-                // image filters  
-                open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-                if (open.ShowDialog() == DialogResult.OK)
-                {
-                    // display image in picture box  
-                    pt_hang.Image = new Bitmap(open.FileName);
-                    pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
-                    // image file path  
-                    txt_linkAnh.Text = open.FileName;
-                }
+                MessageBox.Show(sp_BUS.save_SanPham(), Error);
             }
-        
+        }
+
+        private void btn_SearchHang_Click(object sender, EventArgs e)
+        {
+            // open file dialog   
+            OpenFileDialog open = new OpenFileDialog();
+            // image filters  
+            open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                // display image in picture box  
+                pt_hang.Image = new Bitmap(open.FileName);
+                pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
+                // image file path  
+                txt_linkAnh.Text = open.FileName;
+            }
+        }
+
+        private void frmQuan_Tri_Load(object sender, EventArgs e)
+        {
+            filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            foreach (FilterInfo Device in filterInfoCollection)
+                cboCamera.Items.Add(Device.Name);
+            cboCamera.SelectedIndex = 0;
+            videoCaptureDevice = new VideoCaptureDevice();
+        }
+
+        private void Btn_LOgout_Click(object sender, EventArgs e)
+        {
+            videoCaptureDevice = new VideoCaptureDevice(filterInfoCollection[cboCamera.SelectedIndex].MonikerString);
+            videoCaptureDevice.NewFrame += FinalFrame_NewFrame;
+            videoCaptureDevice.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            BarcodeReader Reader = new BarcodeReader();
+            Result result = Reader.Decode((Bitmap)pt_hang.Image);
+            if (result != null)
+                txt_linkAnh.Text = result.ToString();
+        }
+
+        private void FinalFrame_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        {
+            //throw new NotImplementedException();
+            pt_hang.Image = (Bitmap)eventArgs.Frame.Clone();
+        }
+
+        private void frmQuan_Tri_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (videoCaptureDevice.IsRunning == true)
+                videoCaptureDevice.Stop();
+        }
+
+        private void Btn_listHang_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+
     }
 }
+
 
 
 

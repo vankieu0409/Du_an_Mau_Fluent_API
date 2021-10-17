@@ -52,5 +52,13 @@ namespace GUI_QLBH
                 }
             }
         }
+
+        private void llb_QuenMK_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            frmQuenMatKhau QMK = new frmQuenMatKhau();
+            this.Hide();
+            QMK.ShowDialog();
+            this.Show();
+        }
     }
 }

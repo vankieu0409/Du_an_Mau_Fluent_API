@@ -108,6 +108,7 @@ namespace GUI_QLBH
             this.llb_QuenMK.TabIndex = 7;
             this.llb_QuenMK.TabStop = true;
             this.llb_QuenMK.Text = "Quên Mật Khẩu";
+            this.llb_QuenMK.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llb_QuenMK_LinkClicked);
             // 
             // txt_gmail
             // 

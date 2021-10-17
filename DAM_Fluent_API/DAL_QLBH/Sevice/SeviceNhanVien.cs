@@ -3,6 +3,7 @@ using System.Linq;
 using DAL_QLBH.DBContext;
 using DAL_QLBH.Entites;
 using DAL_QLBH.InterfaceService;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL_QLBH.Sevice
 {
@@ -20,7 +21,7 @@ namespace DAL_QLBH.Sevice
 
         public void activeDB()
         {
-            lsstNhanViens = DB.NhanViens.ToList();
+            lsstNhanViens = DB.NhanViens.AsNoTracking().ToList();
         }
 
         public List<NhanVien> getListNhanVien()
