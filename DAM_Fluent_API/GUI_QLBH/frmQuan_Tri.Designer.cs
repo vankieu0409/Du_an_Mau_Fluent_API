@@ -56,6 +56,7 @@ namespace GUI_QLBH
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
             this.cboCamera = new System.Windows.Forms.ComboBox();
             this.pt_hang = new System.Windows.Forms.PictureBox();
             this.txt_note = new System.Windows.Forms.TextBox();
@@ -98,7 +99,6 @@ namespace GUI_QLBH
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label18 = new System.Windows.Forms.Label();
             this.tab_quantri.SuspendLayout();
             this.tb_NhanVien.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Nhanvien)).BeginInit();
@@ -427,6 +427,16 @@ namespace GUI_QLBH
             this.tabPage2.Text = "Mặt Hàng";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label18.Location = new System.Drawing.Point(707, 11);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(113, 25);
+            this.label18.TabIndex = 75;
+            this.label18.Text = "chọn camera";
+            // 
             // cboCamera
             // 
             this.cboCamera.FormattingEnabled = true;
@@ -443,7 +453,6 @@ namespace GUI_QLBH
             this.pt_hang.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pt_hang.TabIndex = 73;
             this.pt_hang.TabStop = false;
-            
             // 
             // txt_note
             // 
@@ -643,6 +652,7 @@ namespace GUI_QLBH
             this.DGV_hang.RowTemplate.Height = 29;
             this.DGV_hang.Size = new System.Drawing.Size(1178, 282);
             this.DGV_hang.TabIndex = 48;
+            this.DGV_hang.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_hang_CellClick);
             this.DGV_hang.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_hang_CellContentClick);
             // 
             // tabPage3
@@ -865,16 +875,6 @@ namespace GUI_QLBH
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label18.Location = new System.Drawing.Point(707, 11);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(113, 25);
-            this.label18.TabIndex = 75;
-            this.label18.Text = "chọn camera";
             // 
             // frmQuan_Tri
             // 

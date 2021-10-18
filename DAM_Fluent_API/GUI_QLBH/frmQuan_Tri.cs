@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Windows.Forms.Design;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
@@ -48,6 +48,8 @@ namespace GUI_QLBH
         private string pathImage;
         FilterInfoCollection filterInfoCollection;
         VideoCaptureDevice videoCaptureDevice;
+        private string fileName;
+        private string fileAddress;
 
         public frmQuan_Tri()
         {
@@ -420,39 +422,31 @@ namespace GUI_QLBH
 
         }
 
-        Image byteArrayToImage(byte[] byteArrayIn)
-        {
-            MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
-            ms.Write(byteArrayIn, 0, byteArrayIn.Length);
-            return Image.FromStream(ms, true); //Exception occurs here
-        }
-
-        byte[] CopyImageToByteArray(string pathIMG)
-        {
-            Image theImage = Image.FromFile(pathIMG);
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                theImage.Save(memoryStream, ImageFormat.Png);
-                return memoryStream.ToArray();
-            }
-        }
-
         private void DGV_hang_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+           // int rowindex = e.RowIndex;
+           //int idhang= Convert.ToInt32(DGV_hang.Rows[rowindex].Cells[0].Value.ToString());
+           //var Sp = sp_BUS.getlisHangs().Where(c => c.MaHang == idhang).Select(c=>c.HinhAnh).FirstOrDefault();
+           // pt_hang.Image= Image.FromFile(Sp);
 
             if (e.ColumnIndex == DGV_hang.Columns["Dẫn Ảnh"].Index)
             {
                 // open file dialog   
                 OpenFileDialog open = new OpenFileDialog();
                 // image filters  
-                open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                open.Filter = "Bitmap(*.bmp)|*.bmp|JPEG(*.jpg)|*.jpg|GIF(*.gif)|*.gif|All files(*.*)|*.*";
+                open.FilterIndex = 2;
+                open.Title = "Chọn Ảnh Minh Họa";
                 if (open.ShowDialog() == DialogResult.OK)
                 {
+                    fileAddress = open.FileName;
                     // display image in picture box  
-                    pt_hang.Image = new Bitmap(open.FileName);
+                    pt_hang.Image = Image.FromFile(fileAddress);
                     pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
+                    fileName = Path.GetFileName(open.FileName);
+                    string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length - 10));
                     // image file path  
-                    pathImage = open.FileName;
+                    txt_linkAnh.Text = "\\image\\" + fileName;
 
                 }
             }
@@ -477,6 +471,7 @@ namespace GUI_QLBH
                         DialogResult.Yes)
                     {
                         MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
+                        File.Copy(fileAddress,fileName,true);
                     }
                 }
 
@@ -492,6 +487,7 @@ namespace GUI_QLBH
                     sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
                     sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
                     sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                    sp.HinhAnh = txt_linkAnh.Text;
                     sp.MaNV = nv_BUS.getListNhanVien_BUS()
                         .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
                         .Select(c => c.MaNV).FirstOrDefault();
@@ -529,28 +525,14 @@ namespace GUI_QLBH
             }
         }
 
-        private void btn_SearchHang_Click(object sender, EventArgs e)
-        {
-            // open file dialog   
-            OpenFileDialog open = new OpenFileDialog();
-            // image filters  
-            open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-            if (open.ShowDialog() == DialogResult.OK)
-            {
-                // display image in picture box  
-                pt_hang.Image = new Bitmap(open.FileName);
-                pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
-                // image file path  
-                txt_linkAnh.Text = open.FileName;
-            }
-        }
+
 
         private void frmQuan_Tri_Load(object sender, EventArgs e)
         {
             filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             foreach (FilterInfo Device in filterInfoCollection)
                 cboCamera.Items.Add(Device.Name);
-            cboCamera.SelectedIndex = 0;
+            cboCamera.SelectedIndex = 1;
             videoCaptureDevice = new VideoCaptureDevice();
         }
 
@@ -586,7 +568,15 @@ namespace GUI_QLBH
             timer1.Start();
         }
 
-
+        private void DGV_hang_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length-2));
+            int rowindex = e.RowIndex;
+            if (rowindex < 0 && rowindex > sp_BUS.getlisHangs().Count) return;
+            int idhang = Convert.ToInt32(DGV_hang.Rows[rowindex].Cells[0].Value.ToString());
+            var Sp = sp_BUS.getlisHangs().Where(c => c.MaHang == idhang).Select(c => c.HinhAnh).FirstOrDefault();
+            pt_hang.Image = Image.FromFile(saveDirectory+Sp);
+        }
     }
 }
 
