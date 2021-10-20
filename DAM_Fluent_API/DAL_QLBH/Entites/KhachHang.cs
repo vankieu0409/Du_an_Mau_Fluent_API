@@ -20,7 +20,7 @@ namespace DAL_QLBH.Entites
         [StringLength(5)]
         public int GioiTinh { get; set; }
         [Required]
-        public bool trangthai  { get; set; }
+        public bool flag { get; set; }
     
         public string MaNV { get; set; } 
        [ForeignKey("MaNV")] public NhanVien KhachHangs { get; set; }

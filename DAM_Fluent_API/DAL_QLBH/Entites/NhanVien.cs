@@ -24,6 +24,7 @@ namespace DAL_QLBH.Entites
         public int VaiTro { get; set; }
         [Required]
         public bool TinhTrang { get; set; }
+        public bool flag { get; set; }
         [Required]
         [StringLength(50)]
         public string MatKhau { get; set; }

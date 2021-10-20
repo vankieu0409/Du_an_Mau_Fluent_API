@@ -73,7 +73,7 @@ namespace BUS_QLBH.BUS_SeVice
 
         public string Delete_KhachHang(KhachHang kh)
         {
-            kh.trangthai = false;
+            kh.flag = false;
             ListKhachHangs_BUS[ListKhachHangs_BUS.FindIndex(c => c.DienThoai == kh.DienThoai)] = kh;
             return dalKhachHang.Delete_KhachHang(kh);
         }

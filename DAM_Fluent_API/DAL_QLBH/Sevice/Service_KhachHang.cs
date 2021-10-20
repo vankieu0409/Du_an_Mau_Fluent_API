@@ -43,7 +43,7 @@ namespace DAL_QLBH.Sevice
 
         public string Delete_KhachHang(KhachHang kh)
         {
-            kh.trangthai = false;
+            
            if (DB.KhachHangs.ToList().Any(c => c.DienThoai == kh.DienThoai))
             {
                 DB.KhachHangs.Remove(kh);

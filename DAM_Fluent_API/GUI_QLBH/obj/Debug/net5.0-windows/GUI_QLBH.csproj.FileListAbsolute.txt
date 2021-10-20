@@ -62,3 +62,4 @@ E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\bin\Debug\net5.0-wind
 E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\bin\Debug\net5.0-windows\AForge.Video.dll
 E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\bin\Debug\net5.0-windows\AForge.Video.DirectShow.dll
 E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\bin\Debug\net5.0-windows\zxing.dll
+E:\C# (Sharp)\Du_an_Mau_Fluent_API\DAM_Fluent_API\GUI_QLBH\obj\Debug\net5.0-windows\GUI_QLBH.csproj.CopyComplete

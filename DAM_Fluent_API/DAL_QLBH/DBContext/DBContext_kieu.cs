@@ -21,6 +21,7 @@ namespace DAL_QLBH.DBContext
         }
 
         //khai báo bảng
+        public DbSet<BarcodeSP> BarcodeSps { get; set; }
         public DbSet<NhanVien> NhanViens { get; set; }
         public DbSet<Hang> Hangs { get; set; }
         public DbSet<KhachHang> KhachHangs { get; set; }

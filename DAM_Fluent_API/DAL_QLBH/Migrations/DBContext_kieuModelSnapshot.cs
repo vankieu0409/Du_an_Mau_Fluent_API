@@ -18,6 +18,36 @@ namespace DAL_QLBH.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DAL_QLBH.Entites.BarcodeSP", b =>
+                {
+                    b.Property<string>("TenHang")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double>("DonGiaBan")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DonGiaNhap")
+                        .HasColumnType("float");
+
+                    b.Property<string>("GhiChu")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("SoLuong")
+                        .HasColumnType("int");
+
+                    b.Property<string>("barCode")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.HasKey("TenHang");
+
+                    b.ToTable("BarCodeSP");
+                });
+
             modelBuilder.Entity("DAL_QLBH.Entites.Hang", b =>
                 {
                     b.Property<int>("MaHang")
@@ -35,11 +65,6 @@ namespace DAL_QLBH.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("HinhAnh")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("MaNV")
                         .HasColumnType("nvarchar(20)");
@@ -84,7 +109,7 @@ namespace DAL_QLBH.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("trangthai")
+                    b.Property<bool>("flag")
                         .HasColumnType("bit");
 
                     b.HasKey("DienThoai");
@@ -128,6 +153,9 @@ namespace DAL_QLBH.Migrations
 
                     b.Property<int>("VaiTro")
                         .HasColumnType("int");
+
+                    b.Property<bool>("flag")
+                        .HasColumnType("bit");
 
                     b.HasKey("MaNV");
 

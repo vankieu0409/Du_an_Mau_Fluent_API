@@ -277,7 +277,7 @@ namespace GUI_QLBH
             kh.TenKhach = txt_nameKhach.Text;
             kh.GioiTinh = rbtn_nam_Khach.Checked ? 1 : 0;
             kh.DiaChi = txt_AddressKhach.Text;
-            kh.trangthai = true;
+            kh.flag = true;
             kh.MaNV = NvForKH.MaNV;
             if (MessageBox.Show($"Bạn có muốn thêm Khách hàng {kh.TenKhach} vào DS người mua hàng", Error,
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
