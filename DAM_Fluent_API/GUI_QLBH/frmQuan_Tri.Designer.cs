@@ -635,7 +635,6 @@ namespace GUI_QLBH
             this.txt_timhang.Name = "txt_timhang";
             this.txt_timhang.Size = new System.Drawing.Size(295, 27);
             this.txt_timhang.TabIndex = 49;
-            this.txt_timhang.TextChanged += new System.EventHandler(this.txt_timhang_TextChanged);
             this.txt_timhang.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_timhang_KeyUp);
             // 
             // DGV_hang
@@ -919,6 +918,7 @@ namespace GUI_QLBH
             // 
             // DGV_ThongKe
             // 
+            this.DGV_ThongKe.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGV_ThongKe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_ThongKe.Location = new System.Drawing.Point(6, 111);
             this.DGV_ThongKe.Name = "DGV_ThongKe";

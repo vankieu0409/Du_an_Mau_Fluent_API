@@ -3,28 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
-
 using AForge.Video;
 using AForge.Video.DirectShow;
-
 using BUS_QLBH.BUS_Interface;
 using BUS_QLBH.BUS_SeVice;
 using BUS_QLBH.untities;
-
 using DAL_QLBH.Entites;
-
 using ZXing;
 
 namespace GUI_QLBH
 {
-    public partial class frmQuan_Tri : Form
+    public partial class frmNhanVien : Form
     {
         private string Error = " Thông báo của UBND xã Tuân Chính";
         private int flag = 0;
@@ -59,7 +52,7 @@ namespace GUI_QLBH
         string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length - 27));
 
         #endregion
-        public frmQuan_Tri()
+        public frmNhanVien()
         {
             InitializeComponent();
             NvForKH = new NhanVien();
@@ -160,12 +153,14 @@ namespace GUI_QLBH
         {
             if (CheckNhanVien() == true)
             {
-                if (nv_BUS.getListNhanVien_BUS().Any(c=>c.MatKhau==txt_PassWord.Text))
+                if (nv_BUS.getListNhanVien_BUS().Any(c => c.MatKhau == txt_PassWord.Text))
                 {
                     MessageBox.Show("mật Khẩu bị trùng!\n Vui Lòng Đổi mật khẩu khác!", Error);
                 }
                 else
                 {
+
+
                     NhanVien nv = new NhanVien();
                     nv.Email = txt_gmail.Text;
                     nv.TenNv = txt_nameNV.Text;
@@ -179,12 +174,11 @@ namespace GUI_QLBH
                         DialogResult.Yes)
                     {
                         MessageBox.Show(nv_BUS.AddNhanvien_BUS(nv), Error);
-                        flag = 1;
                     }
                 }
 
                 loatDAtaNHANVIEN();
-                flag = 2;
+                flag = 1;
             }
         }
 
@@ -211,45 +205,6 @@ namespace GUI_QLBH
             IdWhenClickNV = DGV_Nhanvien.Rows[rowindex].Cells[6].Value.ToString();
         }
 
-        private void btn_Edit_Click(object sender, EventArgs e)
-        {
-            if (CheckNhanVien())
-            {
-                NhanVien nv = new NhanVien();
-                nv = nv_BUS.getListNhanVien_BUS().Find(c => c.MaNV == IdWhenClickNV);
-                nv.Email = txt_gmail.Text;
-                nv.TenNv = txt_nameNV.Text;
-                nv.DiaChi = txt_diaChiNV.Text;
-                nv.VaiTro = rbtn_QuanTri.Checked ? 1 : 0;
-                nv.TinhTrang = Cbx_HoatDong.Checked ? true : false;
-                nv.MatKhau = txt_PassWord.Text;
-                if (MessageBox.Show($"bạn muốn Sửa tài Khoản nhân viên {nv.TenNv} chứ??", Error,
-                        MessageBoxButtons.YesNo) ==
-                    DialogResult.Yes)
-                {
-                    MessageBox.Show(nv_BUS.EditNhanVien_BUS(nv), Error);
-                    flag = 1;
-                }
-                loatDAtaNHANVIEN();
-              
-            }
-
-
-        }
-
-        private void btn_delete_Click(object sender, EventArgs e)
-        {
-            var nv = nv_BUS.getListNhanVien_BUS().Find(c => c.MaNV == IdWhenClickNV);
-            nv.flag = false;
-            if (MessageBox.Show($"bạn muốn xóa tài Khoản nhân viên {nv.TenNv} chứ??", Error, MessageBoxButtons.YesNo) ==
-                DialogResult.Yes)
-            {
-                MessageBox.Show(nv_BUS.DeleteNhanVien_BUS(nv), Error);flag = 1;
-            }
-
-            loatDAtaNHANVIEN();
-            
-        }
 
         private void txt_Search_MouseDown(object sender, MouseEventArgs e)
         {
@@ -379,9 +334,9 @@ namespace GUI_QLBH
                     MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     MessageBox.Show(KH_Bus.Add_Khachhang(kh), Error);
-                    flag = 2;
                 }
                 loadDGV_Khachhang();
+                flag = 2;
             }
         }
 
@@ -397,44 +352,12 @@ namespace GUI_QLBH
             IdWhenClickkh = txt_SDTKhach.Text;
         }
 
-        private void btn_SuaKhach_Click(object sender, EventArgs e)
-        {
-            if (CheckKhachHang())
-            {
-                var kh1 = KH_Bus.GetlissKhachHangs().FirstOrDefault(c => c.DienThoai == IdWhenClickkh);
-                kh1.DienThoai = txt_SDTKhach.Text;
-                kh1.TenKhach = txt_nameKhach.Text;
-                kh1.GioiTinh = rbtn_nam_Khach.Checked ? 1 : 0;
-                kh1.DiaChi = txt_AddressKhach.Text;
-                if (MessageBox.Show($"bạn có muốn Sửa thông tin của khách hàng {kh1.TenKhach} Không?", Error,
-                    MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    MessageBox.Show(KH_Bus.Edit_KhachHang(kh1), Error);
-                    flag = 2;
-                }
-                loadDGV_Khachhang();
-            }
-        }
-
-        private void btn_XoaKhach_Click(object sender, EventArgs e)
-        {
-            var kh1 = KH_Bus.GetlissKhachHangs().FirstOrDefault(c => c.DienThoai == IdWhenClickkh);
-            if (MessageBox.Show($"bạn có muốn Xóa thông tin của khách hàng {kh1.TenKhach} Không?", Error,
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                MessageBox.Show(KH_Bus.Delete_KhachHang(kh1), Error);
-                flag = 2;
-            }
-
-            loadDGV_Khachhang();
-        }
-
         private void btn_LuuKhach_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show($"bạn có muốn Lưu không?", Error, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 MessageBox.Show(KH_Bus.Save_KhachHang(), Error);
-                flag = 0;
+                flag = 2;
             }
 
             loadDGV_Khachhang();
@@ -505,9 +428,6 @@ namespace GUI_QLBH
                 cbService.Name = "Option";
                 cbService.HeaderText = " Option";
                 cbService.Items.Add("Create");
-                cbService.Items.Add("Edit");
-                cbService.Items.Add("Remove");
-
                 DGV_hang.Columns.Add(cbService);
             }
 
@@ -626,65 +546,25 @@ namespace GUI_QLBH
                 {
                     //if (CheckSP())
                     //{
-                        Hang sp = new Hang();
-                        //sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
-                        sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
-                        sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
-                        sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
-                        sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
-                        sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                        sp.MaNV = nv_BUS.getListNhanVien_BUS()
-                            .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
-                            .Select(c => c.MaNV).FirstOrDefault();
-                        if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) ==
-                            DialogResult.Yes)
-                        {
-                            MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
-                        }
-                    
-                }
-
-                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Edit")
-                {
-                    //if (CheckSP())
-                    //{
-
-
-                        var sp = sp_BUS.getlisHangs()
-                            .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
-                            .FirstOrDefault();
-
-                        sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
-                        sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
-                        sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
-                        sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
-                        sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                        sp.MaNV = nv_BUS.getListNhanVien_BUS()
-                            .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
-                            .Select(c => c.MaNV).FirstOrDefault();
-                        if (MessageBox.Show($"bạn có sửa thông tin SP {sp.TenHang} thêm không??", Error,
-                            MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            MessageBox.Show(sp_BUS.Edit_SanPham(sp), Error);
-
-                        }
-                    //}
-                }
-
-                if (DGV_hang.Rows[e.RowIndex].Cells[e.ColumnIndex - 1].Value.ToString() == "Remove")
-                {
-
-                    var sp = sp_BUS.getlisHangs()
-                        .Where(c => c.MaHang == Convert.ToInt32(DGV_hang.Rows[row].Cells[0].Value.ToString()))
-                        .FirstOrDefault();
-                    if (MessageBox.Show($"bạn có muốn xóa SP {sp.TenHang} thêm không??", Error,
-                        MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    Hang sp = new Hang();
+                    //sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
+                    sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
+                    sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
+                    sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
+                    sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
+                    sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
+                    sp.MaNV = nv_BUS.getListNhanVien_BUS()
+                        .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
+                        .Select(c => c.MaNV).FirstOrDefault();
+                    if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) ==
+                        DialogResult.Yes)
                     {
-                        MessageBox.Show(sp_BUS.delete_SanPham(sp), Error);
+                        MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
                     }
+
+                    flag = 3;
                 }
 
-                flag = 3;
                 loadData_SP();
             }
         }
@@ -702,14 +582,7 @@ namespace GUI_QLBH
 
 
 
-        private void frmQuan_Tri_Load(object sender, EventArgs e)
-        {
-            filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            foreach (FilterInfo Device in filterInfoCollection)
-                cboCamera.Items.Add(Device.Name);
-            cboCamera.SelectedIndex = 1;
-            videoCaptureDevice = new VideoCaptureDevice();
-        }
+       
 
         private void Btn_LOgout_Click(object sender, EventArgs e)
         {
@@ -730,26 +603,6 @@ namespace GUI_QLBH
         {
             //throw new NotImplementedException();
             pt_hang.Image = (Bitmap)eventArgs.Frame.Clone();
-        }
-
-        private void frmQuan_Tri_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (videoCaptureDevice.IsRunning == true)
-            {
-                videoCaptureDevice.Stop();
-            }
-            if (flag == 1 || flag == 2 || flag == 3)
-            {
-                if (MessageBox.Show("Bạn vừa thay đổi Dữ liệu  mà chưa Lưu.\n Bạn Có muốn lưu lại không?",
-                    Error,
-                    MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    nv_BUS.SaveData_BUS();
-                    KH_Bus.Save_KhachHang();
-                    sp_BUS.save_SanPham();
-                    flag = 0;
-                }
-            }
         }
 
         private void Btn_listHang_Click(object sender, EventArgs e)
@@ -819,7 +672,7 @@ namespace GUI_QLBH
             }
             DGV_hang.Rows.Clear();
 
-            foreach (var x in sp_BUS.getlisHangs().Where(c=>c.TenHang.StartsWith(txt_timhang.Text)&& c.trangthai==true))
+            foreach (var x in sp_BUS.getlisHangs().Where(c => c.TenHang.StartsWith(txt_timhang.Text) && c.trangthai == true))
             {
                 DGV_hang.Rows.Add(x.MaHang, x.TenHang, x.SoLuong == 0 ? "Hết hàng" : $"{x.SoLuong}", x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
                     nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
@@ -884,11 +737,11 @@ namespace GUI_QLBH
                 {
                     MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
                 }
-                loadData_SP();
+
                 flag = 3;
             }
 
-            
+            loadData_SP();
 
         }
 
@@ -927,58 +780,37 @@ namespace GUI_QLBH
             }
 
         }
-        #endregion
 
-        #region Thông Kê
-
-        private void btn_nvNhaphang_Click(object sender, EventArgs e)
-        {
-            var maNhanVien = nv_BUS.getListNhanVien_BUS().Where(c => c.TenNv == txt_TenNV.Text).Select(c => c.MaNV)
-                .FirstOrDefault();
-            DGV_ThongKe.ColumnCount = 6;
-            DGV_ThongKe.Columns[0].Name = "  Tên Sản Phẩm";
-            DGV_ThongKe.Columns[1].Name = "  Số Lượng";
-            DGV_ThongKe.Columns[2].Name = "  Đơn Giá Nhập ";
-            DGV_ThongKe.Columns[3].Name = "  Đơn Giá Xuất";
-            DGV_ThongKe.Columns[4].Name = "  Ghi Chú ";
-            DGV_ThongKe.Columns[5].Name = " Nhân Viên nhập";
-            DGV_ThongKe.Rows.Clear();
-
-            foreach (var x in sp_BUS.getlisHangs().Where(c => c.MaNV == maNhanVien))
-            {
-                DGV_ThongKe.Rows.Add( x.TenHang, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
-                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
-            }
-
-
-        }
-
-        private void btn_hangTon_Click(object sender, EventArgs e)
-        {
-            DGV_ThongKe.ColumnCount = 6;
-            DGV_ThongKe.Columns[0].Name = "  Tên Sản Phẩm";
-            DGV_ThongKe.Columns[1].Name = "  Số Lượng";
-            DGV_ThongKe.Columns[2].Name = "  Đơn Giá Nhập ";
-            DGV_ThongKe.Columns[3].Name = "  Đơn Giá Xuất";
-            DGV_ThongKe.Columns[4].Name = "  Ghi Chú ";
-            DGV_ThongKe.Columns[5].Name = " Nhân Viên nhập";
-            DGV_ThongKe.Rows.Clear();
-
-            foreach (var x in sp_BUS.getlisHangs().Where(c => c.SoLuong > 0 && c.trangthai == true))
-            {
-                DGV_ThongKe.Rows.Add(x.TenHang, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
-                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
-            }
-
-        }
 
         #endregion
 
-        
+        private void frmNhanVien_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (videoCaptureDevice.IsRunning == true)
+            {
+                videoCaptureDevice.Stop();
+            }
+            if (flag == 1 || flag == 2 || flag == 3)
+            {
+                if (MessageBox.Show("Bạn vừa thay đổi Dữ liệu mà chưa Lưu.\n Bạn Có muốn lưu lại không?",
+                    Error,
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    nv_BUS.SaveData_BUS();
+                    KH_Bus.Save_KhachHang();
+                    sp_BUS.save_SanPham();
+                }
+            }
+        }
+
+        private void frmNhanVien_Load(object sender, EventArgs e)
+        {
+            filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                foreach (FilterInfo Device in filterInfoCollection)
+                    cboCamera.Items.Add(Device.Name);
+                cboCamera.SelectedIndex = 1;
+                videoCaptureDevice = new VideoCaptureDevice();
+        }
     }
 }
-
-
-
-
-

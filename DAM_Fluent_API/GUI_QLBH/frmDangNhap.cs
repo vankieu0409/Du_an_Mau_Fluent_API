@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 using BUS_QLBH.BUS_Interface;
 using BUS_QLBH.BUS_SeVice;
-
+using BUS_QLBH.untities;
 using DAL_QLBH.Entites;
 
 namespace GUI_QLBH
@@ -23,6 +23,7 @@ namespace GUI_QLBH
         private List<NhanVien> listNhanViens;
         private NhanVien nhanVien;
         private IQuenMatKhau matKhau;
+        private ICheck Check;
         #endregion
         public frmDangNhap()
         {
@@ -33,6 +34,7 @@ namespace GUI_QLBH
             listNhanViens = nv_BUS.getListNhanVien_BUS();
             nhanVien = new NhanVien();
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            Check = new CheckEveryThing();
         }
 
 
@@ -51,6 +53,16 @@ namespace GUI_QLBH
                     quanTri.getNV_toKhachHang(nhanVien);
                     this.Hide();
                     quanTri.ShowDialog();
+                    this.Show();
+                }
+                else
+                {
+                    frmNhanVien nhanVienSignin = new frmNhanVien();
+                    nhanVienSignin.tenNguoiDangNhap(nhanVien.TenNv);
+                    MessageBox.Show(" Đăng nhập thành công!", Error);
+                    nhanVienSignin.getNV_toKhachHang(nhanVien);
+                    this.Hide();
+                    nhanVienSignin.ShowDialog();
                     this.Show();
                 }
 
