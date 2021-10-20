@@ -65,6 +65,7 @@ namespace GUI_QLBH
             // 
             // pictureBox1
             // 
+            this.pictureBox1.InitialImage = global::GUI_QLBH.Properties.Resources.images;
             this.pictureBox1.Location = new System.Drawing.Point(195, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(151, 118);
@@ -124,6 +125,7 @@ namespace GUI_QLBH
             this.txt_matkhau.Location = new System.Drawing.Point(38, 289);
             this.txt_matkhau.Multiline = true;
             this.txt_matkhau.Name = "txt_matkhau";
+            this.txt_matkhau.PasswordChar = '*';
             this.txt_matkhau.Size = new System.Drawing.Size(453, 31);
             this.txt_matkhau.TabIndex = 9;
             this.txt_matkhau.Text = "0409";

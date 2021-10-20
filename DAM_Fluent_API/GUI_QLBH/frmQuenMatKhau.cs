@@ -7,10 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using BUS_QLBH.BUS_Interface;
 using BUS_QLBH.BUS_SeVice;
-
 using DAL_QLBH.Entites;
 
 namespace GUI_QLBH
@@ -35,15 +33,10 @@ namespace GUI_QLBH
         public frmQuenMatKhau()
         {
             InitializeComponent();
-            Sender = new SendMessage(GetMessage);
 
         }
         //Hàm có nhiệm vụ lấy tham số truyền vào
 
-        private void GetMessage(string Message)
-        {
-            txt_Email.Text = Message;
-        }
 
         private void btn_XacNhan_Click(object sender, EventArgs e)
         {
@@ -53,22 +46,20 @@ namespace GUI_QLBH
             if (_TimeNow - _Time > 1)
             {
                 MessageBox.Show("Đã quá thời gian 1 phút .\n Mã code đã vô hiệu hóa");
-                btn_XacNhan.Text = "Send";
+                
             }
             else if (flag == 3)
             {
                 MessageBox.Show("Đã quá 3 lần xác nhân .\n Mã code đã vô hiệu hóa");
-                btn_SendtoEmail.Text = "Send";
+                
             }
             else if (Txt_XacNhan.Text == _code)
             {
                 _NhanVien = new NhanVien();
                 _NhanVien = nv.getListNhanVien_BUS().FirstOrDefault(c=>c.Email==txt_Email.Text);
                 _NhanVien.MatKhau = _pass;
-                _NhanVien.TinhTrang = false;
-                MessageBox.Show(QMK.UpdatePass(_NhanVien), mess);
-                frmDangNhap frm = new frmDangNhap();
-                frm.Show();
+                MessageBox.Show(nv.EditNhanVien_BUS(_NhanVien), mess);
+                nv.SaveData_BUS();
                 this.Close();
             }
             else
@@ -82,15 +73,15 @@ namespace GUI_QLBH
         {
             if (btn_SendtoEmail.Text == "Send")
             {
-            //    flag = 0;
-            //    txt_Email.Enabled = false;
-            //    if (nv.getListNhanVien_BUS().Any(c => c.TenNv == txt_Email.Text) == false)
-            //    {
-            //        MessageBox.Show("Email k tồn tại trong hệ thống", mess);
-            //        return;
-            //    }
-                //else
-                //{
+                flag = 0;
+                txt_Email.Enabled = false;
+                if (nv.getListNhanVien_BUS().Any(c => c.TenNv == txt_Email.Text) == false)
+                {
+                    MessageBox.Show("Email k tồn tại trong hệ thống", mess);
+                    return;
+                }
+                else
+                {
                     var sendPassCode = QMK.SenderMail(txt_Email.Text);
                     if (sendPassCode == null)
                     {
@@ -106,7 +97,7 @@ namespace GUI_QLBH
                         MessageBox.Show("Mã Code đã được giử vào email", mess);
                         _Time = DateTime.Now.Minute;
                     }
-                //}
+                }
            }
 
             else if (btn_SendtoEmail.Text == "Send")
@@ -116,12 +107,12 @@ namespace GUI_QLBH
                 if (_TimeNow - _Time > 1)
                 {
                     MessageBox.Show("Đã quá thời gian 1 phút .\n Mã code đã vô hiệu hóa");
-                    btn_XacNhan.Text = "Send";
+                    
                 }
                 else if (flag == 3)
                 {
                     MessageBox.Show("Đã quá 3 lần xác nhân .\n Mã code đã vô hiệu hóa");
-                    btn_SendtoEmail.Text = "Send";
+                    
                 }
                 else if (Txt_XacNhan.Text == _code)
                 {
@@ -130,8 +121,6 @@ namespace GUI_QLBH
                     _NhanVien.MatKhau = _pass;
                     _NhanVien.TinhTrang = false;
                     MessageBox.Show(QMK.UpdatePass(_NhanVien), mess);
-                    frmDangNhap frm = new frmDangNhap();
-                    frm.Show();
                     this.Close();
                 }
                 else

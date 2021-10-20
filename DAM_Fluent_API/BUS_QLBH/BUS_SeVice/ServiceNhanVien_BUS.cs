@@ -22,7 +22,6 @@ namespace BUS_QLBH.BUS_SeVice
 
         public List<NhanVien> getListNhanVien_BUS()
         {
-
             return lstNhanVienBUS; 
         }
 

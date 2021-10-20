@@ -8,5 +8,6 @@ namespace BUS_QLBH.BUS_Interface
         public PassCode SenderMail(string mail);
         public NhanVien nhanViens(string email);
         public string UpdatePass(NhanVien nv);
+       
     }
 }

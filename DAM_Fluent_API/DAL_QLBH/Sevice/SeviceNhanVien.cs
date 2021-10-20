@@ -37,16 +37,8 @@ namespace DAL_QLBH.Sevice
 
         public string EditNhanVien(NhanVien nv)
         {
-           
-            if (DB.NhanViens.ToList().Any(c => c.MaNV == nv.MaNV))
-            {
-                DB.NhanViens.Update(nv);
-                return " Sửa thành Công";
-            }
-            else
-            {
-                return " Sửa thành Công";
-            }
+            DB.NhanViens.Update(nv);
+            return " Sửa thành Công";
         }
 
         public string DeleteNhanVien(NhanVien nv)

@@ -1,4 +1,4 @@
-﻿USE tessssst
+﻿USE DuAnMau_FluentAPI
 GO
 INSERT INTO dbo.NhanVien
 (
@@ -65,7 +65,7 @@ DELETE FROM dbo.NhanVien WHERE MaNV LIKE 'NV'
 
 SELECT* FROM dbo.NhanVien JOIN dbo.KHACHHANG ON KHACHHANG.MaNV = NhanVien.MaNV
 
-insert into NhanViens(id,MaNv,Email,TenNv,DiaChi,VaiTro,TinhTrang,MatKhau,flag)
+insert into NhanViens(id,MaNv,Email,TenNv,DiaChi,VaiTro,TinhTrang,MatKhau)
  values(2, N'NV2',  -- MaNV - nvarchar(20)
         -- Id - int
     N'kieunvph14806@fpt.edu.vn',  -- Email - nvarchar(50)
@@ -74,4 +74,4 @@ insert into NhanViens(id,MaNv,Email,TenNv,DiaChi,VaiTro,TinhTrang,MatKhau,flag)
     1,    -- VaiTro - int
     1, -- TinhTrang - bit
     N'0409',   -- MatKhau - nvarchar(50)
-	1)
+	)

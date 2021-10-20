@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+
 using BUS_QLBH.BUS_Interface;
 using BUS_QLBH.Models;
 
@@ -14,9 +15,9 @@ using DAL_QLBH.Sevice;
 
 namespace BUS_QLBH.BUS_SeVice
 {
-    public class QuenMatKhau: IQuenMatKhau
+    public class QuenMatKhau : IQuenMatKhau
     {
-        private ISeviceNhanVien nv;
+        private ISeviceNhanVien nv1;
         private PassCode _sendPassCode;
         private List<NhanVien> _lstNhanViens;
 
@@ -25,9 +26,9 @@ namespace BUS_QLBH.BUS_SeVice
         private string _code;
         public QuenMatKhau()
         {
-            nv = new SeviceNhanVien();
+            nv1 = new SeviceNhanVien();
             _lstNhanViens = new List<NhanVien>();
-            _lstNhanViens = nv.getListNhanVien();
+            _lstNhanViens = nv1.getListNhanVien();
         }
         public string PassRandom(int lengthCode)
         {
@@ -68,23 +69,23 @@ namespace BUS_QLBH.BUS_SeVice
             client.Credentials = cred;
             client.EnableSsl = true;
             client.Send(mgs);
-            _sendPassCode = new PassCode(MaHoaPass(_pass), _code);
+            _sendPassCode = new PassCode(_pass, _code);
             return _sendPassCode;
 
         }
         public NhanVien nhanViens(string email)
         {
-           
-                return _lstNhanViens.Where(c => c.Email == email).FirstOrDefault();
-            
-        
+
+            return _lstNhanViens.Where(c => c.Email == email).FirstOrDefault();
+
+
         }
 
         public string UpdatePass(NhanVien nv)
         {
-            this.nv.EditNhanVien(nv);
-                this.nv.SaveData();
-                return "Mật khẩu đã được đổi thành công";
+            nv1.EditNhanVien(nv);
+            nv1.SaveData();
+            return "Mật khẩu đã được đổi thành công";
 
         }
     }

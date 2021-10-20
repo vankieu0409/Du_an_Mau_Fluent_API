@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+
 using AForge.Video;
 using AForge.Video.DirectShow;
 
@@ -28,11 +29,13 @@ namespace GUI_QLBH
         private int flag = 0;
         MemoryStream mmst;
         private NhanVien NvForKH;
+        private IQuenMatKhau matKhau;
 
         #region TAB_PAPE_NHÂN VIÊN
 
         private IServiceNhanVien_BUS nv_BUS;
         private string IdWhenClickNV;
+        private string nameOfSigningIn;
 
         #endregion
 
@@ -50,6 +53,7 @@ namespace GUI_QLBH
         VideoCaptureDevice videoCaptureDevice;
         private string fileName;
         private string fileAddress;
+        string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length - 27));
 
         public frmQuan_Tri()
         {
@@ -58,6 +62,7 @@ namespace GUI_QLBH
 
             #region TAB_PAPE_NHÂN VIÊN
 
+            
             nv_BUS = new ServiceNhanVien_BUS();
             rbtn_nam_Khach.Checked = true;
             Cbx_HoatDong.Checked = true;
@@ -81,6 +86,11 @@ namespace GUI_QLBH
 
         #region TAB_PAPE_NHÂN VIÊN
 
+        public void tenNguoiDangNhap(string name)
+        {
+            nameOfSigningIn = name;
+            lbl_Taikhoan.Text = nameOfSigningIn;
+        }
         void loatDAtaNHANVIEN()
         {
             DGV_Nhanvien.ColumnCount = 7;
@@ -90,6 +100,7 @@ namespace GUI_QLBH
             DGV_Nhanvien.Columns[3].Name = "Vai Trò";
             DGV_Nhanvien.Columns[4].Name = "Trạng Thái";
             DGV_Nhanvien.Columns[5].Name = "Mật Khẩu";
+            DGV_Nhanvien.Columns["Mật Khẩu"].Visible = false;
             DGV_Nhanvien.Columns[6].Name = "maNV";
             DGV_Nhanvien.Columns["maNV"].Visible = false;
             DGV_Nhanvien.Rows.Clear();
@@ -192,6 +203,7 @@ namespace GUI_QLBH
             DGV_Nhanvien.Columns[3].Name = "Vai Trò";
             DGV_Nhanvien.Columns[4].Name = "Trạng Thái";
             DGV_Nhanvien.Columns[5].Name = "Mật Khẩu";
+            DGV_hang.Columns["Mật Khẩu"].Visible = false;
             DGV_Nhanvien.Columns[6].Name = "maNV";
             DGV_Nhanvien.Columns["maNV"].Visible = false;
             DGV_Nhanvien.Rows.Clear();
@@ -357,6 +369,7 @@ namespace GUI_QLBH
 
         void loadData_SP()
         {
+            Image image = null;
 
             DGV_hang.ColumnCount = 8;
             DGV_hang.Columns[0].Name = " Mã hàng";
@@ -370,27 +383,17 @@ namespace GUI_QLBH
             DGV_hang.Columns[7].Name = "Ảnh";
             DGV_hang.Columns[7].Visible = false;
 
-            DataGridViewImageColumn img = new DataGridViewImageColumn();
-            img.HeaderText = "Hình ảnh đã tải lên";
-            img.ImageLayout = DataGridViewImageCellLayout.Stretch;
 
-            //Image image = Image.FromFile("E:\\zDownLoad\\me_loan.jpeg");
-            //img.Image = image;
-            //DGV_hang.Columns.Add(img);
-            //img.HeaderText = "Image";
-            //img.Name = "img";
+            //DataGridViewButtonColumn button1 = new DataGridViewButtonColumn();
+            //{
 
+            //    button1.Name = "Dẫn Ảnh";
+            //    button1.HeaderText = "Dẫn Ảnh";
+            //    button1.Text = "Dẫn Ảnh";
+            //    button1.UseColumnTextForButtonValue = true; //dont forget this line
+            //    this.DGV_hang.Columns.Add(button1);
 
-            DataGridViewButtonColumn button1 = new DataGridViewButtonColumn();
-            {
-
-                button1.Name = "Dẫn Ảnh";
-                button1.HeaderText = "Dẫn Ảnh";
-                button1.Text = "Dẫn Ảnh";
-                button1.UseColumnTextForButtonValue = true; //dont forget this line
-                this.DGV_hang.Columns.Add(button1);
-
-            }
+            //}
             DataGridViewComboBoxColumn cbService = new DataGridViewComboBoxColumn();
             {
                 cbService.Name = "Option";
@@ -415,8 +418,17 @@ namespace GUI_QLBH
             foreach (var x in sp_BUS.getlisHangs())
             {
                 DGV_hang.Rows.Add(x.MaHang, x.TenHang, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.GhiChu,
-                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault(),
-                    x.HinhAnh);
+                    nv_BUS.getListNhanVien_BUS().Where(c => c.MaNV == x.MaNV).Select(c => c.TenNv).FirstOrDefault());
+            }
+
+            DataGridViewImageColumn img = new DataGridViewImageColumn();
+            {
+                img.HeaderText = "Hình ảnh đã tải lên";
+                img.ImageLayout = DataGridViewImageCellLayout.Stretch;
+                img.Image = image;
+                DGV_hang.Columns.Insert(7, img);
+                img.HeaderText = "Image";
+                img.Name = "img";
 
             }
 
@@ -424,32 +436,32 @@ namespace GUI_QLBH
 
         private void DGV_hang_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-           // int rowindex = e.RowIndex;
-           //int idhang= Convert.ToInt32(DGV_hang.Rows[rowindex].Cells[0].Value.ToString());
-           //var Sp = sp_BUS.getlisHangs().Where(c => c.MaHang == idhang).Select(c=>c.HinhAnh).FirstOrDefault();
-           // pt_hang.Image= Image.FromFile(Sp);
+            // int rowindex = e.RowIndex;
+            //int idhang= Convert.ToInt32(DGV_hang.Rows[rowindex].Cells[0].Value.ToString());
+            //var Sp = sp_BUS.getlisHangs().Where(c => c.MaHang == idhang).Select(c=>c.HinhAnh).FirstOrDefault();
+            // pt_hang.Image= Image.FromFile(Sp);
 
-            if (e.ColumnIndex == DGV_hang.Columns["Dẫn Ảnh"].Index)
-            {
-                // open file dialog   
-                OpenFileDialog open = new OpenFileDialog();
-                // image filters  
-                open.Filter = "Bitmap(*.bmp)|*.bmp|JPEG(*.jpg)|*.jpg|GIF(*.gif)|*.gif|All files(*.*)|*.*";
-                open.FilterIndex = 2;
-                open.Title = "Chọn Ảnh Minh Họa";
-                if (open.ShowDialog() == DialogResult.OK)
-                {
-                    fileAddress = open.FileName;
-                    // display image in picture box  
-                    pt_hang.Image = Image.FromFile(fileAddress);
-                    pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
-                    fileName = Path.GetFileName(open.FileName);
-                    string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length - 10));
-                    // image file path  
-                    txt_linkAnh.Text = "\\image\\" + fileName;
+            //if (e.ColumnIndex == DGV_hang.Columns["Dẫn Ảnh"].Index)
+            //{
+            //    // open file dialog   
+            //    OpenFileDialog open = new OpenFileDialog();
+            //    // image filters  
+            //    open.Filter = "Bitmap(*.bmp)|*.bmp|JPEG(*.jpg)|*.jpg|GIF(*.gif)|*.gif|All files(*.*)|*.*";
+            //    open.FilterIndex = 2;
+            //    open.Title = "Chọn Ảnh Minh Họa";
+            //    if (open.ShowDialog() == DialogResult.OK)
+            //    {
+            //        fileAddress = open.FileName;
+            //        // display image in picture box  
+            //        pt_hang.Image = Image.FromFile(fileAddress);
+            //        pt_hang.SizeMode = PictureBoxSizeMode.StretchImage;
+            //        fileName = Path.GetFileName(open.FileName);
+            //        string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length - 10));
+            //        // image file path  
+            //        txt_linkAnh.Text = "\\image\\" + fileName;
 
-                }
-            }
+            //    }
+            //}
 
             if (e.ColumnIndex == DGV_hang.Columns["Select"].Index)
             {
@@ -457,21 +469,20 @@ namespace GUI_QLBH
                 {
                     int row = e.RowIndex;
                     Hang sp = new Hang();
-                    sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
+                    //sp.MaHang = sp_BUS.getlisHangs().Max(c => c.MaHang) + 1;
                     sp.TenHang = DGV_hang.Rows[row].Cells[1].Value.ToString();
                     sp.SoLuong = Convert.ToInt32(DGV_hang.Rows[row].Cells[2].Value);
                     sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
                     sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
                     sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                    sp.HinhAnh =
-                        sp.MaNV = nv_BUS.getListNhanVien_BUS()
-                            .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
-                            .Select(c => c.MaNV).FirstOrDefault();
+                    sp.MaNV = nv_BUS.getListNhanVien_BUS()
+                        .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
+                        .Select(c => c.MaNV).FirstOrDefault();
                     if (MessageBox.Show("bạn có muốn thêm không??", Error, MessageBoxButtons.YesNo) ==
                         DialogResult.Yes)
                     {
                         MessageBox.Show(sp_BUS.Add_SanPham(sp), Error);
-                        File.Copy(fileAddress,fileName,true);
+                        File.Copy(fileAddress, fileName, true);
                     }
                 }
 
@@ -487,7 +498,6 @@ namespace GUI_QLBH
                     sp.DonGiaNhap = double.Parse(DGV_hang.Rows[row].Cells[3].Value.ToString());
                     sp.DonGiaBan = double.Parse(DGV_hang.Rows[row].Cells[4].Value.ToString());
                     sp.GhiChu = DGV_hang.Rows[row].Cells[5].Value.ToString();
-                    sp.HinhAnh = txt_linkAnh.Text;
                     sp.MaNV = nv_BUS.getListNhanVien_BUS()
                         .Where(c => c.TenNv == DGV_hang.Rows[row].Cells[6].Value.ToString())
                         .Select(c => c.MaNV).FirstOrDefault();
@@ -548,7 +558,7 @@ namespace GUI_QLBH
             BarcodeReader Reader = new BarcodeReader();
             Result result = Reader.Decode((Bitmap)pt_hang.Image);
             if (result != null)
-                txt_linkAnh.Text = result.ToString();
+                txt_Barcode.Text = result.ToString();
         }
 
         private void FinalFrame_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -560,7 +570,9 @@ namespace GUI_QLBH
         private void frmQuan_Tri_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (videoCaptureDevice.IsRunning == true)
+            {
                 videoCaptureDevice.Stop();
+            }
         }
 
         private void Btn_listHang_Click(object sender, EventArgs e)
@@ -570,12 +582,22 @@ namespace GUI_QLBH
 
         private void DGV_hang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length-2));
-            int rowindex = e.RowIndex;
-            if (rowindex < 0 && rowindex > sp_BUS.getlisHangs().Count) return;
-            int idhang = Convert.ToInt32(DGV_hang.Rows[rowindex].Cells[0].Value.ToString());
-            var Sp = sp_BUS.getlisHangs().Where(c => c.MaHang == idhang).Select(c => c.HinhAnh).FirstOrDefault();
-            pt_hang.Image = Image.FromFile(saveDirectory+Sp);
+            //string saveDirectory = Application.StartupPath.Substring(0, (Application.StartupPath.Length-27));
+            //int rowindex = e.RowIndex;
+            //if (rowindex < 0 && rowindex > sp_BUS.getlisHangs().Count) return;
+            //int idhang = Convert.ToInt32(DGV_hang.Rows[rowindex].Cells[0].Value.ToString());
+            //var Sp = sp_BUS.getlisHangs().Where(c => c.MaHang == idhang).Select(c => c.HinhAnh).FirstOrDefault();
+            //pt_hang.Image = Image.FromFile(saveDirectory+Sp);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void txt_timhang_KeyUp(object sender, KeyEventArgs e)
+        {
+            txt_timhang.Text = "";
         }
     }
 }
