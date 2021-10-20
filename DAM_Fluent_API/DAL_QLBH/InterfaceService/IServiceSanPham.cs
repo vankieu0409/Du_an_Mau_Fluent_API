@@ -10,6 +10,7 @@ namespace DAL_QLBH.InterfaceService
         public string Edit_SanPham(Hang sp);
         public string delete_SanPham(Hang sp);
         public string save_SanPham();
+        List<BarcodeSP> GetlisBarcodeSps();
 
 
     }

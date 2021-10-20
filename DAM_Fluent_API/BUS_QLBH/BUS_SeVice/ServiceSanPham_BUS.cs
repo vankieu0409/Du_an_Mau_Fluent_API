@@ -11,6 +11,7 @@ namespace BUS_QLBH.BUS_SeVice
     public class ServiceSanPham_BUS : IServiceSanPham_BUS
     {
         private List<Hang> LstSanPhams;
+        private List<BarcodeSP> _lstBarcodeSps;
         private IServiceSanPham SP;
 
         public ServiceSanPham_BUS()
@@ -18,6 +19,8 @@ namespace BUS_QLBH.BUS_SeVice
             LstSanPhams = new List<Hang>();
             SP = new Service_SanPham();
             LstSanPhams = SP.getlisHangs();
+            _lstBarcodeSps = new List<BarcodeSP>();
+            _lstBarcodeSps = SP.GetlisBarcodeSps();
         }
         public List<Hang> getlisHangs()
         {
@@ -45,6 +48,10 @@ namespace BUS_QLBH.BUS_SeVice
         public string save_SanPham()
         {
             return SP.save_SanPham();
+        }
+        public List<BarcodeSP> GetlisBarcodeSps()
+        {
+            return _lstBarcodeSps;
         }
     }
 }

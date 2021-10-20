@@ -11,11 +11,14 @@ namespace DAL_QLBH.Sevice
     {
         private DBContext_kieu Db;
         private List<Hang> LstSanPhams;
+        private List<BarcodeSP> _lstBarcodeSps;
         public Service_SanPham()
         {
             Db = new DBContext_kieu();
             LstSanPhams = new List<Hang>();
             LstSanPhams = Db.Hangs.ToList();
+            _lstBarcodeSps = new List<BarcodeSP>();
+            _lstBarcodeSps = Db.BarcodeSps.ToList();
         }
         public List<Hang> getlisHangs()
         {
@@ -44,9 +47,10 @@ namespace DAL_QLBH.Sevice
 
         public string delete_SanPham(Hang sp)
         {
+            sp.trangthai = false;
             if (Db.Hangs.ToList().Any(c => c.MaHang == sp.MaHang))
             {
-                Db.Hangs.Remove(sp);
+                Db.Hangs.Update(sp);
                 return " Xóa thành Công";
             }
             else
@@ -59,6 +63,11 @@ namespace DAL_QLBH.Sevice
         {
             Db.SaveChanges();
             return " Lưu Thành Công";
+        }
+
+        public List<BarcodeSP> GetlisBarcodeSps()
+        {
+            return _lstBarcodeSps;
         }
     }
 }

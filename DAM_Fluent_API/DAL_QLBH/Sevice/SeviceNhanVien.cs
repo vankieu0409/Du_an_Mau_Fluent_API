@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
 using DAL_QLBH.DBContext;
 using DAL_QLBH.Entites;
 using DAL_QLBH.InterfaceService;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL_QLBH.Sevice
@@ -43,10 +45,10 @@ namespace DAL_QLBH.Sevice
 
         public string DeleteNhanVien(NhanVien nv)
         {
-            
+
             if (DB.NhanViens.ToList().Any(c => c.MaNV == nv.MaNV))
             {
-                DB.NhanViens.Remove(nv);
+                DB.NhanViens.Update(nv);
                 return " Xóa thành Công";
             }
             else

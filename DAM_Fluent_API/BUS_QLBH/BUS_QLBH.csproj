@@ -8,4 +8,8 @@
     <ProjectReference Include="..\DAL_QLBH\DAL_QLBH.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Unititys\" />
+  </ItemGroup>
+
 </Project>

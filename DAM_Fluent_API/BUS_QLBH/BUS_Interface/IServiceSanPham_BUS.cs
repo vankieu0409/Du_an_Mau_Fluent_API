@@ -11,5 +11,6 @@ namespace BUS_QLBH.BUS_Interface
         public string Edit_SanPham(Hang sp);
         public string delete_SanPham(Hang sp);
         public string save_SanPham();
+        public List<BarcodeSP> GetlisBarcodeSps();
     }
 }

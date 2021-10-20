@@ -94,18 +94,18 @@ namespace GUI_QLBH
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label20 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txt_TenNV = new System.Windows.Forms.TextBox();
+            this.btn_nvNhaphang = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.btn_hangTon = new System.Windows.Forms.Button();
+            this.DGV_ThongKe = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label19 = new System.Windows.Forms.Label();
             this.lbl_Taikhoan = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btn_nvNhaphang = new System.Windows.Forms.Button();
-            this.btn_hangTon = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label20 = new System.Windows.Forms.Label();
             this.tab_quantri.SuspendLayout();
             this.tb_NhanVien.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Nhanvien)).BeginInit();
@@ -115,8 +115,8 @@ namespace GUI_QLBH
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_KhachHang)).BeginInit();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_ThongKe)).BeginInit();
             this.SuspendLayout();
             // 
             // tab_quantri
@@ -159,7 +159,7 @@ namespace GUI_QLBH
             this.tb_NhanVien.Location = new System.Drawing.Point(4, 32);
             this.tb_NhanVien.Name = "tb_NhanVien";
             this.tb_NhanVien.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_NhanVien.Size = new System.Drawing.Size(1221, 668);
+            this.tb_NhanVien.Size = new System.Drawing.Size(1221, 690);
             this.tb_NhanVien.TabIndex = 0;
             this.tb_NhanVien.Text = "Nhân Viên";
             this.tb_NhanVien.UseVisualStyleBackColor = true;
@@ -436,6 +436,7 @@ namespace GUI_QLBH
             this.button3.TabIndex = 78;
             this.button3.Text = "Đọc Mã";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -446,6 +447,7 @@ namespace GUI_QLBH
             this.button2.TabIndex = 77;
             this.button2.Text = "Create";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // txt_Barcode
             // 
@@ -611,6 +613,7 @@ namespace GUI_QLBH
             this.button12.TabIndex = 55;
             this.button12.Text = "Skip";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // Btn_SaveHang
             // 
@@ -632,6 +635,7 @@ namespace GUI_QLBH
             this.txt_timhang.Name = "txt_timhang";
             this.txt_timhang.Size = new System.Drawing.Size(295, 27);
             this.txt_timhang.TabIndex = 49;
+            this.txt_timhang.TextChanged += new System.EventHandler(this.txt_timhang_TextChanged);
             this.txt_timhang.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_timhang_KeyUp);
             // 
             // DGV_hang
@@ -842,6 +846,87 @@ namespace GUI_QLBH
             this.label1.TabIndex = 63;
             this.label1.Text = "Điện Thoại";
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label20);
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Controls.Add(this.btn_hangTon);
+            this.tabPage1.Controls.Add(this.DGV_ThongKe);
+            this.tabPage1.Location = new System.Drawing.Point(4, 32);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1221, 690);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Thống kê";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(818, 55);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(104, 20);
+            this.label20.TabIndex = 5;
+            this.label20.Text = "Hàng Tồn Kho";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txt_TenNV);
+            this.groupBox1.Controls.Add(this.btn_nvNhaphang);
+            this.groupBox1.Controls.Add(this.label17);
+            this.groupBox1.Location = new System.Drawing.Point(8, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(597, 99);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Hàng được nhập bởi:";
+            // 
+            // txt_TenNV
+            // 
+            this.txt_TenNV.Location = new System.Drawing.Point(154, 47);
+            this.txt_TenNV.Name = "txt_TenNV";
+            this.txt_TenNV.Size = new System.Drawing.Size(246, 27);
+            this.txt_TenNV.TabIndex = 4;
+            // 
+            // btn_nvNhaphang
+            // 
+            this.btn_nvNhaphang.Location = new System.Drawing.Point(425, 45);
+            this.btn_nvNhaphang.Name = "btn_nvNhaphang";
+            this.btn_nvNhaphang.Size = new System.Drawing.Size(94, 29);
+            this.btn_nvNhaphang.TabIndex = 1;
+            this.btn_nvNhaphang.Text = "Xem";
+            this.btn_nvNhaphang.UseVisualStyleBackColor = true;
+            this.btn_nvNhaphang.Click += new System.EventHandler(this.btn_nvNhaphang_Click);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(39, 50);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(97, 20);
+            this.label17.TabIndex = 3;
+            this.label17.Text = "tên nhân viên";
+            // 
+            // btn_hangTon
+            // 
+            this.btn_hangTon.Location = new System.Drawing.Point(941, 51);
+            this.btn_hangTon.Name = "btn_hangTon";
+            this.btn_hangTon.Size = new System.Drawing.Size(94, 29);
+            this.btn_hangTon.TabIndex = 2;
+            this.btn_hangTon.Text = "Xem";
+            this.btn_hangTon.UseVisualStyleBackColor = true;
+            this.btn_hangTon.Click += new System.EventHandler(this.btn_hangTon_Click);
+            // 
+            // DGV_ThongKe
+            // 
+            this.DGV_ThongKe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_ThongKe.Location = new System.Drawing.Point(6, 111);
+            this.DGV_ThongKe.Name = "DGV_ThongKe";
+            this.DGV_ThongKe.RowHeadersWidth = 51;
+            this.DGV_ThongKe.RowTemplate.Height = 29;
+            this.DGV_ThongKe.Size = new System.Drawing.Size(1209, 573);
+            this.DGV_ThongKe.TabIndex = 0;
+            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
@@ -876,85 +961,6 @@ namespace GUI_QLBH
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.label20);
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.btn_hangTon);
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 32);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1221, 690);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "Thống kê";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 111);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(1209, 573);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // btn_nvNhaphang
-            // 
-            this.btn_nvNhaphang.Location = new System.Drawing.Point(425, 45);
-            this.btn_nvNhaphang.Name = "btn_nvNhaphang";
-            this.btn_nvNhaphang.Size = new System.Drawing.Size(94, 29);
-            this.btn_nvNhaphang.TabIndex = 1;
-            this.btn_nvNhaphang.Text = "Xem";
-            this.btn_nvNhaphang.UseVisualStyleBackColor = true;
-            // 
-            // btn_hangTon
-            // 
-            this.btn_hangTon.Location = new System.Drawing.Point(941, 51);
-            this.btn_hangTon.Name = "btn_hangTon";
-            this.btn_hangTon.Size = new System.Drawing.Size(94, 29);
-            this.btn_hangTon.TabIndex = 2;
-            this.btn_hangTon.Text = "Xem";
-            this.btn_hangTon.UseVisualStyleBackColor = true;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(39, 50);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(97, 20);
-            this.label17.TabIndex = 3;
-            this.label17.Text = "tên nhân viên";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(154, 47);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(246, 27);
-            this.textBox1.TabIndex = 4;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.btn_nvNhaphang);
-            this.groupBox1.Controls.Add(this.label17);
-            this.groupBox1.Location = new System.Drawing.Point(8, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(597, 99);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Hàng được nhập bởi:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(818, 55);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(104, 20);
-            this.label20.TabIndex = 5;
-            this.label20.Text = "Hàng Tồn Kho";
-            // 
             // frmQuan_Tri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -981,9 +987,9 @@ namespace GUI_QLBH
             ((System.ComponentModel.ISupportInitialize)(this.DGV_KhachHang)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_ThongKe)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1062,10 +1068,10 @@ namespace GUI_QLBH
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_TenNV;
         private System.Windows.Forms.Button btn_nvNhaphang;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button btn_hangTon;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView DGV_ThongKe;
     }
 }
