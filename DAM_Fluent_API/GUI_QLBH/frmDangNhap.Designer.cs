@@ -168,6 +168,7 @@ namespace GUI_QLBH
             this.Controls.Add(this.label1);
             this.Name = "frmDangNhap";
             this.Text = "Đăng Nhập";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmDangNhap_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
