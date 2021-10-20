@@ -635,7 +635,9 @@ namespace GUI_QLBH
             this.txt_timhang.Name = "txt_timhang";
             this.txt_timhang.Size = new System.Drawing.Size(295, 27);
             this.txt_timhang.TabIndex = 49;
+            this.txt_timhang.Text = "Tìm Kiếm Sản Phẩm";
             this.txt_timhang.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_timhang_KeyUp);
+            this.txt_timhang.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txt_timhang_MouseDown);
             // 
             // DGV_hang
             // 

@@ -972,9 +972,13 @@ namespace GUI_QLBH
 
         }
 
+
         #endregion
 
-        
+        private void txt_timhang_MouseDown(object sender, MouseEventArgs e)
+        {
+            txt_timhang.Text=String.Empty;
+        }
     }
 }
 
